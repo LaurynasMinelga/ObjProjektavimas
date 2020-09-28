@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29409.12
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Craft-server", "Craft-server.csproj", "{5E0AD72B-69A6-4499-A0F6-925C4692FC10}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{5E0AD72B-69A6-4499-A0F6-925C4692FC10}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5E0AD72B-69A6-4499-A0F6-925C4692FC10}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5E0AD72B-69A6-4499-A0F6-925C4692FC10}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5E0AD72B-69A6-4499-A0F6-925C4692FC10}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {D6A9BAFA-1DAD-456E-AC4E-7DB55263EE55}
+	EndGlobalSection
+EndGlobal

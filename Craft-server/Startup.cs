@@ -10,6 +10,9 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using Microsoft.EntityFrameworkCore;
+using Craft_server.Models;
+using Craft_server.Models.Contexts;
 
 namespace Craft_server
 {
@@ -25,6 +28,14 @@ namespace Craft_server
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddDbContext<ItemContext>(opt => opt.UseInMemoryDatabase("ItemList"));
+            services.AddDbContext<PlayerContext>(opt => opt.UseInMemoryDatabase("PlayerList"));
+            services.AddDbContext<ShipContext>(opt => opt.UseInMemoryDatabase("ShipList"));
+            services.AddDbContext<SessionContext>(opt => opt.UseInMemoryDatabase("SessionList"));
+            services.AddDbContext<GamePanelContext>(opt => opt.UseInMemoryDatabase("GamePanelList"));
+            services.AddDbContext<GameBoardContext>(opt => opt.UseInMemoryDatabase("GameBoardList"));
+            services.AddDbContext<CoordinateContext>(opt => opt.UseInMemoryDatabase("CoordinateList"));
+
             services.AddControllers();
         }
 

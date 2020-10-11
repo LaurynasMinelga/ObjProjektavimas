@@ -7,7 +7,6 @@ namespace Craft_server.Models
 {
     public enum Levels
     {
-        Alaska,
         Desert,
         Swamp,
         Sea,

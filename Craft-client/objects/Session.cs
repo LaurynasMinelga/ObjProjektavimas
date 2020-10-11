@@ -1,19 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
 
-namespace Craft_server.Models
+namespace Craft_client.objects
 {
-    public class Session
+    class Session
     {
         public long Id { get; set; }
         public int turn { get; set; }
-        public GamePanel GamePanel { get; set; }
-        //public long GamePanelId { get; set; }
-        public Player PlayerOne { get; set; }
         public long PlayerOneId { get; set; }
-        public Player PlayerTwo { get; set; }
         public long PlayerTwoId { get; set; }
     }
 }

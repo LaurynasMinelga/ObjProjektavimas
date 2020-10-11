@@ -1,0 +1,15 @@
+G:\KaTeU\8 semestras\game\ObjProjektavimas\Craft-client\bin\Debug\Craft-client.exe.config
+G:\KaTeU\8 semestras\game\ObjProjektavimas\Craft-client\bin\Debug\Craft-client.exe
+G:\KaTeU\8 semestras\game\ObjProjektavimas\Craft-client\bin\Debug\Craft-client.pdb
+G:\KaTeU\8 semestras\game\ObjProjektavimas\Craft-client\obj\Debug\Craft-client.csprojAssemblyReference.cache
+G:\KaTeU\8 semestras\game\ObjProjektavimas\Craft-client\obj\Debug\Craft_client.Lobby.resources
+G:\KaTeU\8 semestras\game\ObjProjektavimas\Craft-client\obj\Debug\Craft_client.Properties.Resources.resources
+G:\KaTeU\8 semestras\game\ObjProjektavimas\Craft-client\obj\Debug\Craft-client.csproj.GenerateResource.cache
+G:\KaTeU\8 semestras\game\ObjProjektavimas\Craft-client\obj\Debug\Craft-client.exe
+G:\KaTeU\8 semestras\game\ObjProjektavimas\Craft-client\obj\Debug\Craft-client.pdb
+G:\KaTeU\8 semestras\game\ObjProjektavimas\Craft-client\bin\Debug\Newtonsoft.Json.dll
+G:\KaTeU\8 semestras\game\ObjProjektavimas\Craft-client\bin\Debug\System.Net.Http.Formatting.dll
+G:\KaTeU\8 semestras\game\ObjProjektavimas\Craft-client\bin\Debug\Newtonsoft.Json.xml
+G:\KaTeU\8 semestras\game\ObjProjektavimas\Craft-client\bin\Debug\System.Net.Http.Formatting.xml
+G:\KaTeU\8 semestras\game\ObjProjektavimas\Craft-client\obj\Debug\Craft_client.MainGame.resources
+G:\KaTeU\8 semestras\game\ObjProjektavimas\Craft-client\obj\Debug\Craft-client.csproj.CopyComplete

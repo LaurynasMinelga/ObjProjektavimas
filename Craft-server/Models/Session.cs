@@ -11,9 +11,8 @@ namespace Craft_server.Models
         public int turn { get; set; }
         public GamePanel GamePanel { get; set; }
         //public long GamePanelId { get; set; }
-        public Player PlayerOne { get; set; }
+        public List<Player> Player { get; set; }
         public long PlayerOneId { get; set; }
-        public Player PlayerTwo { get; set; }
         public long PlayerTwoId { get; set; }
     }
 }

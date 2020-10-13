@@ -12,5 +12,6 @@ namespace Craft_server.Models
         public long GameBoardId { get; set; } //can be null
         public GameBoard GameBoard { get; set; } //can be null
         public Session Session { get; set; } //can be null
+        public long SessionId { get; set; } //can be null
     }
 }

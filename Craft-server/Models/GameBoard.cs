@@ -9,7 +9,7 @@ namespace Craft_server.Models
     {
         public long Id { get; set; }
         public List<Coordinate> Coordinate { get; set; }
-        public Player player { get; set; }
+        public Player Player { get; set; }
         public long GamePanelId { get; set; }
         public GamePanel GamePanel { get; set; }
     }

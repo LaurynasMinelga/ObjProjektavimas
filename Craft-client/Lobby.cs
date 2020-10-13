@@ -17,6 +17,7 @@ namespace Craft_client
     public partial class Lobby : Form
     {
         static HttpClient client;
+        private bool CancelButton_Clicked = false;
         public Lobby(HttpClient _client)
         {
             InitializeComponent();
@@ -47,14 +48,125 @@ namespace Craft_client
             // If created successfully - proceed with session creation.
             if (url != null)
             {
+                ICollection<Session> sessions = null;
+                HttpResponseMessage response = await client.GetAsync(client.BaseAddress.PathAndQuery + "api/Sessions"); 
+                sessions = await response.Content.ReadAsAsync<ICollection<Session>>();
 
+                if (sessions.Count != 0) //if there are sessions active
+                {
+                    bool open_session_exists = true;
+                    foreach (Session session in sessions)
+                    {
+                        if (session.PlayerTwoId == 0) // if an open session exists (someone awaits other players)
+                        {
+                            response = await client.GetAsync(url);
+                            Player = await response.Content.ReadAsAsync<Player>();
+                            Session new_session = new Session
+                            {
+                                Id = session.Id,
+                                turn = 0,
+                                PlayerOneId = session.PlayerOneId,
+                                PlayerTwoId = Player.Id
+                            };
+                            response = await client.PutAsJsonAsync(client.BaseAddress.PathAndQuery + "api/Sessions/" + $"{session.Id}", new_session); // add second player
+
+                            //initiate game
+                            Initiate_Game(new_session.Id, level_name);
+                            break;
+                        }
+                        open_session_exists = false;
+                    }
+                    if (!open_session_exists) // if open session does not exist
+                    {
+                        await CreateNewSession(url, level_name);
+                    }
+                }
+                else //create new session
+                {
+                    await CreateNewSession(url, level_name);
+                }
             }
             else // indicate user creation failure
             {
                 textBox1.BackColor = Color.Red;
             }
         }
+        // Initiate MainGame window and set level color
+        private void Initiate_Game(long ID, string level_name)
+        {
+            MainGame MainGame = new MainGame(client, ID, level_name);
+            switch (level_name)
+            {
+                case "Desert":
+                    MainGame.BackgroundImage = Properties.Resources.Desert;
+                    break;
+                case "Swamp":
+                    MainGame.BackgroundImage = Properties.Resources.swamp;
+                    break;
+                case "Sea":
+                    MainGame.BackgroundImage = Properties.Resources.sea;
+                    break;
+                case "Space":
+                    MainGame.BackgroundImage = Properties.Resources.space;
+                    break;
+            }
+            MainGame.Show();
+            this.Hide();
+        }
 
+        /// <summary>
+        /// Create new game session and initiate MainGame window
+        /// </summary>
+        /// <param name="url"></param>
+        /// <returns></returns>
+        private async Task CreateNewSession(Uri url, string level_name)
+        {
+            HttpResponseMessage response = await client.GetAsync(url);
+            Player Player = await response.Content.ReadAsAsync<Player>();
+            Session session = new Session
+            {
+                turn = 0,
+                PlayerOneId = Player.Id,
+                PlayerTwoId = 0
+            };
+            Console.WriteLine("Creating new session");
+            Requests requests = new Requests();
+            url = await requests.CreateAsync(session, client, "api/Sessions"); // create new session
+            Console.WriteLine($"Created at {url}");
 
+            panel1.Visible = true; // enable matchmaking panel visibility
+
+            while (session.PlayerTwoId == 0)
+            {
+                await Task.Delay(1000);
+                response = await client.GetAsync(url);//client.BaseAddress.PathAndQuery + "api/Sessions/"+ $"{session.Id}");
+                session = await response.Content.ReadAsAsync<Session>();
+                Console.WriteLine("session id" + session.Id);
+                //Task.WaitAll(Task.Delay(1000));
+
+                if (CancelButton_Clicked)
+                {
+                    HttpStatusCode status = await requests.DeleteAsync(client, "api/Sessions/", session.Id);
+                    panel1.Visible = false;
+                    break; // break if user cancels the matchmaking
+                }
+            }
+
+            if (session.PlayerTwoId != 0)
+            {
+                Initiate_Game(session.Id, level_name);
+            }
+
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            CancelButton_Clicked = true;
+        }
+
+        private void panel1_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
     }
 }

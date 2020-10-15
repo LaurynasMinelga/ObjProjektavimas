@@ -24,10 +24,7 @@ namespace Craft_client
         Button[,] button_grid_player = new Button[10, 10];
         Button[,] button_grid_enemy = new Button[10, 10];
 
-        // Ship count for {cruiser, submarine, warship, aircarrier} by windows they occupy
-        static int[] Ship_Count = new int[4] { 4, 6, 6, 4 };
-        // Last ship placed
-        static int Last_Row = 0; static int Last_Collumn = 0;
+        ShipPlacementController PlaceShip = new ShipPlacementController(); // ship placement methods
 
         public MainGame(HttpClient _client, long _sessionId, string _level_name)
         {
@@ -41,7 +38,9 @@ namespace Craft_client
 
         private void MainGame_Load(object sender, EventArgs e)
         {
-            panel2.Enabled = false;
+            panel2.Enabled = false; // Enemy panel disabled \
+            button1.Enabled = false; // block button         until ships are placed
+            label4.Visible = true; // Label visible         /
         }
 
         private void panel1_Paint(object sender, PaintEventArgs e)
@@ -86,7 +85,7 @@ namespace Craft_client
                     button_grid_player[i, j].Location = new Point(i * buttonSize, j * buttonSize);
                     button_grid_enemy[i, j].Location = new Point(i * buttonSize, j * buttonSize);
 
-                    //set tag as id of a button
+                    //set button.tag as id of a button with coordinates
                     button_grid_player[i, j].Tag = new Point(i, j);
                     button_grid_enemy[i, j].Tag = new Point(i, j);
                 }
@@ -121,14 +120,14 @@ namespace Craft_client
         private void Grid_Button_Click_Player(object sender, EventArgs e)
         {
             //get the row and collumn
-            Button clickedButton = (Button)sender; //cast button object
-            Point location = (Point)clickedButton.Tag; //Get button tag (we added coords to button tag)
+            Button clicked_Button = (Button)sender; //cast button object
+            Point location = (Point)clicked_Button.Tag; //Get button tag (we added coords to button tag)
             int row = location.X; //row
             int collumn = location.Y; //collumn
 
             //place ships
 
-            Disable_Nearby_Buttons(row, collumn);
+            Disable_Nearby_Buttons(row, collumn, clicked_Button);
 
             // log where and what ship was placed
             
@@ -141,78 +140,42 @@ namespace Craft_client
         /// Warship - 3 windows (max 2 ships)
         /// Aircarrier - 4 windows (max 1 ship)
         /// </summary>
-        private void Disable_Nearby_Buttons(int row, int collumn)
+        private void Disable_Nearby_Buttons(int row, int collumn, Button clicked_Button)
         {
             RadioButton radio_button = panel3.Controls.OfType<RadioButton>()
                                        .Where(x => x.Checked).FirstOrDefault(); // get checked radio button
 
-            switch (radio_button.Text)
+            if (radio_button != null)
             {
-                case "Cruiser":
-                    Disable_Radio_Buttons(radio_button, 0);
-                    Cruiser_Placed(row, collumn);
-                    break;
+                switch (radio_button.Text)
+                    {
+                        case "Cruiser":
+                            Disable_Radio_Buttons(radio_button, 0);
+                            button_grid_player = PlaceShip.Cruiser_Placed(row, collumn, button_grid_player);
+                            clicked_Button.BackColor = Color.Aqua;
+                        break;
 
-                case "Submarine":
-                    Disable_Radio_Buttons(radio_button, 1);
-                    Submarine_Placed(row, collumn);
-                    break;
+                        case "Submarine":
+                            Disable_Radio_Buttons(radio_button, 1);
+                            button_grid_player = PlaceShip.Submarine_Placed(row, collumn, button_grid_player);
+                            clicked_Button.BackColor = Color.Azure;
+                            break;
 
-                case "Warship":
-                    Disable_Radio_Buttons(radio_button, 2);
+                        case "Warship":
+                            Disable_Radio_Buttons(radio_button, 2);
+                            button_grid_player = PlaceShip.Warship_Placed(row, collumn, button_grid_player);
+                            clicked_Button.BackColor = Color.Bisque;
+                            break;
 
-                    break;
-
-                case "Aircarrier":
-                    Disable_Radio_Buttons(radio_button, 3);
-
-                    break;
+                        case "Aircarrier":
+                            Disable_Radio_Buttons(radio_button, 3);
+                            button_grid_player = PlaceShip.Aircarrier_Placed(row, collumn, button_grid_player);
+                            clicked_Button.BackColor = Color.BlueViolet;
+                            break;
+                    }
+                PlaceShip.Last_step_count++; //placement was made, coordinates of placement will be added to Last_row and Last_collumn
             }
-        }
-
-        /// <summary>
-        /// Disable buttons around Submarine for player board - ships can not touch
-        /// </summary>
-        /// <param name="row"></param>
-        /// <param name="collumn"></param>
-        private void Submarine_Placed(int row, int collumn)
-        {
-            if (Ship_Count[1]%2 != 0 ) // if ship placement was NOT started
-            {
-                if (row != 9 && collumn != 9) { button_grid_player[row + 1, collumn + 1].Enabled = false; }
-                if (row != 9 && collumn != 0) { button_grid_player[row + 1, collumn - 1].Enabled = false; }
-                if (row != 0 && collumn != 9) { button_grid_player[row - 1, collumn + 1].Enabled = false; }
-                if (row != 0 && collumn != 0) { button_grid_player[row - 1, collumn - 1].Enabled = false; }
-
-                Last_Row = row; Last_Collumn = collumn;
-            } else //ship placement was started - end the placement
-            {
-                if (row != 9 && collumn != 9) { button_grid_player[row + 1, collumn + 1].Enabled = false; }
-                if (row != 9) { button_grid_player[row + 1, collumn].Enabled = false; }
-                if (row != 9 && collumn != 0) { button_grid_player[row + 1, collumn - 1].Enabled = false; }
-                if (row != 0 && collumn != 9) { button_grid_player[row - 1, collumn + 1].Enabled = false; }
-                if (row != 0) { button_grid_player[row - 1, collumn].Enabled = false; }
-                if (row != 0 && collumn != 0) { button_grid_player[row - 1, collumn - 1].Enabled = false; }
-                if (collumn != 9 ) { button_grid_player[row, collumn + 1].Enabled = false; }
-                if (collumn != 0 ) { button_grid_player[row, collumn - 1].Enabled = false; }
-            }
-        }
-
-        /// <summary>
-        /// Disable buttons around cruiser for player board - ships can not touch
-        /// </summary>
-        /// <param name="row"></param>
-        /// <param name="collumn"></param>
-        private void Cruiser_Placed(int row, int collumn)
-        {
-            if (row != 9 && collumn != 9) {button_grid_player[row + 1, collumn + 1].Enabled = false; }
-            if (row != 9) { button_grid_player[row + 1, collumn].Enabled = false; }
-            if (row != 9 && collumn != 0) {button_grid_player[row + 1, collumn - 1].Enabled = false; }
-            if (row != 0 && collumn != 9) {button_grid_player[row - 1, collumn + 1].Enabled = false; }
-            if (row != 0) {button_grid_player[row - 1, collumn].Enabled = false; }
-            if (row != 0 && collumn != 0) { button_grid_player[row - 1, collumn - 1].Enabled = false; }
-            if (collumn != 9) {button_grid_player[row, collumn + 1].Enabled = false; }
-            if (collumn != 0) {button_grid_player[row, collumn - 1].Enabled = false; }
+            
         }
 
         /// <summary>
@@ -220,17 +183,26 @@ namespace Craft_client
         /// </summary>
         private void Disable_Radio_Buttons(RadioButton radio_button, int ship_number)
         {
-            Ship_Count[ship_number]--;
-            if (Ship_Count[ship_number] == 0)
+            PlaceShip.Ship_Count[ship_number]--;
+            if (PlaceShip.Ship_Count[ship_number] == 0)
             {
                 radio_button.Enabled = false;
                 radio_button.Checked = false;
             }
-            label5.Text = Ship_Count[0].ToString();
-            label6.Text = (Ship_Count[1] / 2).ToString();
-            label7.Text = (Ship_Count[2] / 3).ToString();
-            label8.Text = Ship_Count[3].ToString();
+            label5.Text = PlaceShip.Ship_Count[0].ToString();
+            label6.Text = (PlaceShip.Ship_Count[1] / 2).ToString();
+            label7.Text = (PlaceShip.Ship_Count[2] / 3).ToString();
+            label8.Text = (PlaceShip.Ship_Count[3] / 4).ToString();
         }
 
+        /// <summary>
+        /// After ship placement, start the battle
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void button1_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }

@@ -12,6 +12,6 @@ namespace Craft_client.objects
         public int[] Row { get; set; }
         public int[] Collumn { get; set; }
         public string Type { get; set; }
-        public int size { get; set; }
+        public int Size { get; set; }
     }
 }

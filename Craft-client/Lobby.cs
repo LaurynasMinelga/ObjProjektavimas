@@ -71,7 +71,7 @@ namespace Craft_client
                             response = await client.PutAsJsonAsync(client.BaseAddress.PathAndQuery + "api/Sessions/" + $"{session.Id}", new_session); // add second player
 
                             //initiate game
-                            Initiate_Game(new_session.Id, level_name);
+                            Initiate_Game(new_session.Id, level_name, Player.Id);
                             break;
                         }
                         open_session_exists = false;
@@ -92,9 +92,9 @@ namespace Craft_client
             }
         }
         // Initiate MainGame window and set level color
-        private void Initiate_Game(long ID, string level_name)
+        private void Initiate_Game(long sessionID, string level_name, long PlayerID)
         {
-            MainGame MainGame = new MainGame(client, ID, level_name);
+            MainGame MainGame = new MainGame(client, sessionID, level_name, PlayerID);
             switch (level_name)
             {
                 case "Desert":
@@ -154,7 +154,7 @@ namespace Craft_client
 
             if (session.PlayerTwoId != 0)
             {
-                Initiate_Game(session.Id, level_name);
+                Initiate_Game(session.Id, level_name, session.PlayerOneId);
             }
 
         }

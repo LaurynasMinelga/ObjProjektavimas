@@ -17,8 +17,11 @@ namespace Craft_client
     public partial class MainGame : Form
     {
         static HttpClient client;
-        static long SessionId;
-        static string level_name;
+        static long SessionId; // Current session id
+        static string level_name; // level string (Desert, Sea, Swamp, Space)
+        static long PlayerId; //current player id
+        Ship[] ships = new Ship[10]; // Unsent ships log
+        int unsent_ships_count = 0; // count of ships already logged <- once 10 - initiate game
 
         //10x10 board of buttons a.k.a single game board
         Button[,] button_grid_player = new Button[10, 10];
@@ -26,7 +29,7 @@ namespace Craft_client
 
         ShipPlacementController PlaceShip = new ShipPlacementController(); // ship placement methods
 
-        public MainGame(HttpClient _client, long _sessionId, string _level_name)
+        public MainGame(HttpClient _client, long _sessionId, string _level_name, long _playerID)
         {
             InitializeComponent();
             populateGameBoard();
@@ -174,8 +177,89 @@ namespace Craft_client
                             break;
                     }
                 PlaceShip.Last_step_count++; //placement was made, coordinates of placement will be added to Last_row and Last_collumn
+                Add_Ship_To_Log(row, collumn, radio_button.Text);
+                Check_If_Ships_Created();
             }
             
+        }
+        /// <summary>
+        /// Check if all chips were created 
+        /// </summary>
+        private void Check_If_Ships_Created()
+        {
+            if (unsent_ships_count == 9)
+            {
+                button1.Enabled = true; // enable start button
+                label4.Text = "All ready! Press start:"; // Label visible
+            }
+        }
+
+        /// <summary>
+        /// Assign ship object for sending to server
+        /// </summary>
+        /// <param name="row"></param>
+        /// <param name="collumn"></param>
+        /// <param name="text"></param>
+        private void Add_Ship_To_Log(int row, int collumn, string ship_type)
+        {
+
+            if (String.IsNullOrEmpty(ships[unsent_ships_count].Type)) // check if object exists
+            {
+                ships[unsent_ships_count].Size = 0;
+            }
+            switch (ship_type)
+            {
+                case "Cruiser":
+                    ships[unsent_ships_count] = SetShip(row, collumn, ship_type);
+                    unsent_ships_count++; //ship created
+                    break;
+
+                case "Submarine":
+                    if (ships[unsent_ships_count].Size == 0)
+                    {
+                        ships[unsent_ships_count] = SetShip(row, collumn, ship_type);
+                    }
+                    else
+                    {
+                        ships[unsent_ships_count] = SetShip(row, collumn, ship_type);
+                        unsent_ships_count++; //ship created
+                    }
+                    break;
+
+                case "Warship":
+                    if (ships[unsent_ships_count].Size == 0 || ships[unsent_ships_count].Size == 1)
+                    {
+                        ships[unsent_ships_count] = SetShip(row, collumn, ship_type);
+                    }
+                    else
+                    {
+                        ships[unsent_ships_count] = SetShip(row, collumn, ship_type);
+                        unsent_ships_count++; //ship created
+                    }
+                    break;
+
+                case "Aircarrier":
+                    if (ships[unsent_ships_count].Size == 0 || ships[unsent_ships_count].Size == 1 || ships[unsent_ships_count].Size == 2)
+                    {
+                        ships[unsent_ships_count] = SetShip(row, collumn, ship_type);
+                    }
+                    else
+                    {
+                        ships[unsent_ships_count] = SetShip(row, collumn, ship_type);
+                        unsent_ships_count++; //ship created
+                    }
+                    break;
+            }
+        }
+
+        private Ship SetShip(int row, int collumn, string ship_type)
+        {
+            ships[unsent_ships_count].Type = ship_type;
+            ships[unsent_ships_count].Row[ships[unsent_ships_count].Size] = row;
+            ships[unsent_ships_count].Collumn[ships[unsent_ships_count].Size] = collumn;
+            ships[unsent_ships_count].Size++;
+
+            return ships[unsent_ships_count];
         }
 
         /// <summary>

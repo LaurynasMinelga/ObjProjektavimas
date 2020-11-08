@@ -11,7 +11,7 @@ namespace Craft_client.objects
         public long Id { get; set; }
         public int[] Row { get; set; }
         public int[] Collumn { get; set; }
-        public string Type { get; set; }
+        public string type { get; set; }
         public int Size { get; set; }
     }
 }

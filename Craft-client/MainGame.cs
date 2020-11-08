@@ -20,8 +20,8 @@ namespace Craft_client
         static long SessionId; // Current session id
         static string level_name; // level string (Desert, Sea, Swamp, Space)
         static long PlayerId; //current player id
-        Ship[] ships = new Ship[10]; // Unsent ships log
-        int unsent_ships_count = 0; // count of ships already logged <- once 10 - initiate game
+        static Ship[] ships = new Ship[10]; // Unsent ships log
+        static int unsent_ships_count = 0; // count of ships already logged <- once 10 - initiate game
 
         //10x10 board of buttons a.k.a single game board
         Button[,] button_grid_player = new Button[10, 10];
@@ -203,9 +203,9 @@ namespace Craft_client
         private void Add_Ship_To_Log(int row, int collumn, string ship_type)
         {
 
-            if (String.IsNullOrEmpty(ships[unsent_ships_count].Type)) // check if object exists
+            if (ships[unsent_ships_count]==null)//String.IsNullOrEmpty(ships[unsent_ships_count].Type)) // check if object exists
             {
-                ships[unsent_ships_count].Size = 0;
+                Initialize_Ship_Object();
             }
             switch (ship_type)
             {
@@ -254,12 +254,23 @@ namespace Craft_client
 
         private Ship SetShip(int row, int collumn, string ship_type)
         {
-            ships[unsent_ships_count].Type = ship_type;
+            ships[unsent_ships_count].type = ship_type;
             ships[unsent_ships_count].Row[ships[unsent_ships_count].Size] = row;
             ships[unsent_ships_count].Collumn[ships[unsent_ships_count].Size] = collumn;
             ships[unsent_ships_count].Size++;
 
             return ships[unsent_ships_count];
+        }
+
+        private void Initialize_Ship_Object()
+        {
+                ships[unsent_ships_count] = new Ship
+                {
+                    Row = new int[] { 0, 0, 0, 0 },
+                    Collumn = new int[] { 0, 0, 0, 0 },
+                    type = null,
+                    Size = 0
+                };
         }
 
         /// <summary>

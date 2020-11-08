@@ -168,5 +168,10 @@ namespace Craft_client
         {
 
         }
+
+        private void Lobby_Load(object sender, EventArgs e)
+        {
+
+        }
     }
 }

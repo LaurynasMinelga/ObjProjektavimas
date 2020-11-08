@@ -211,6 +211,7 @@
             this.Controls.Add(this.textBox1);
             this.Name = "Lobby";
             this.Text = "Craft";
+            this.Load += new System.EventHandler(this.Lobby_Load);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
             this.panel1.ResumeLayout(false);

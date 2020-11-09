@@ -127,7 +127,9 @@ namespace Craft_client
             {
                 turn = 0,
                 PlayerOneId = Player.Id,
-                PlayerTwoId = 0
+                PlayerTwoId = 0,
+                PlayerOneReady = false,
+                PlayerTwoReady = false
             };
             Console.WriteLine("Creating new session");
             Requests requests = new Requests();

@@ -20,6 +20,9 @@ namespace Craft_client
         static long SessionId; // Current session id
         static string level_name; // level string (Desert, Sea, Swamp, Space)
         static long PlayerId; //current player id
+
+        static int GameState = 0; // Game state = 0 (deployment) / 1 (started, but waiting for enemy deployment) / 2 (waiting for enemy move) / 3 (player turn)
+
         static Ship[] ships = new Ship[10]; // Unsent ships log
         static int unsent_ships_count = 0; // count of ships already logged <- once 10 - initiate game
 
@@ -28,6 +31,7 @@ namespace Craft_client
         Button[,] button_grid_enemy = new Button[10, 10];
 
         ShipPlacementController PlaceShip = new ShipPlacementController(); // ship placement methods
+        GameActionsController Game = new GameActionsController(); // game actions methods
 
         public MainGame(HttpClient _client, long _sessionId, string _level_name, long _playerID)
         {
@@ -129,10 +133,7 @@ namespace Craft_client
             int collumn = location.Y; //collumn
 
             //place ships
-
-            Disable_Nearby_Buttons(row, collumn, clicked_Button);
-
-            // log where and what ship was placed
+            Disable_Nearby_Buttons(row, collumn, clicked_Button); // log where and what ship was placed
             
         }
 
@@ -203,7 +204,7 @@ namespace Craft_client
         private void Add_Ship_To_Log(int row, int collumn, string ship_type)
         {
 
-            if (ships[unsent_ships_count]==null)//String.IsNullOrEmpty(ships[unsent_ships_count].Type)) // check if object exists
+            if (ships[unsent_ships_count]==null)// check if object exists
             {
                 Initialize_Ship_Object();
             }
@@ -256,6 +257,7 @@ namespace Craft_client
         {
             ships[unsent_ships_count].type = ship_type;
             ships[unsent_ships_count].Row[ships[unsent_ships_count].Size] = row;
+            Console.WriteLine("ROW --> "+row+"\n");
             ships[unsent_ships_count].Collumn[ships[unsent_ships_count].Size] = collumn;
             ships[unsent_ships_count].Size++;
 
@@ -291,13 +293,23 @@ namespace Craft_client
         }
 
         /// <summary>
-        /// After ship placement, start the battle
+        /// After ship placement, start the battle - send ships log to server and wait for other player
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void button1_Click(object sender, EventArgs e)
+        private async void button1_Click(object sender, EventArgs e)
         {
+            GameState = 1;
 
+            button1.Text = "Loading";
+            button1.Enabled = true; // enable start button
+            label4.Text = "Waiting for other player"; // Label visible
+
+            //send ships to server
+
+
+            //check if another player is ready
+            await Game.InitializeGame(client, SessionId, PlayerId);
         }
     }
 }

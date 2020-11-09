@@ -41,6 +41,49 @@ namespace Craft_server.Controllers
             return session;
         }
 
+        // GET: api/Sessions/ready/2
+        // Sets player as ready for a game / defines which player is ready
+        [HttpPost("{id}/ready/{playerId}")]
+        public async Task<ActionResult<Session>> ReadySession(long id, long playerId)
+        {
+            var session = await _context.Sessions.FindAsync(id);
+
+            if (session == null)
+            {
+                return NotFound();
+            }
+            Console.WriteLine("\n\n\n\n"+session.PlayerOneId + " - this is player one id - " + playerId);
+
+            if (session.PlayerOneId == playerId) // check which player is ready
+            {
+                session.PlayerOneReady = true;
+            }
+            else if (session.PlayerTwoId == playerId)
+            {
+                session.PlayerTwoReady = true;
+            }
+
+            _context.Entry(session).State = EntityState.Modified;
+
+            try
+            {
+                await _context.SaveChangesAsync();
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                if (!SessionExists(id))
+                {
+                    return NotFound();
+                }
+                else
+                {
+                    throw;
+                }
+            }
+
+            return NoContent();
+        }
+
         // PUT: api/Sessions/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for
         // more details see https://aka.ms/RazorPagesCRUD.

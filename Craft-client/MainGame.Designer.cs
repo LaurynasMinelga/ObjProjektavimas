@@ -196,9 +196,9 @@
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(354, 12);
+            this.button1.Location = new System.Drawing.Point(421, 12);
             this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(94, 26);
+            this.button1.Size = new System.Drawing.Size(179, 26);
             this.button1.TabIndex = 8;
             this.button1.Text = "To Battle!";
             this.button1.UseVisualStyleBackColor = true;

@@ -52,6 +52,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="GameActionsController.cs" />
     <Compile Include="Lobby.cs">
       <SubType>Form</SubType>
     </Compile>

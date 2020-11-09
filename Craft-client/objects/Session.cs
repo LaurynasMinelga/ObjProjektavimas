@@ -12,5 +12,7 @@ namespace Craft_client.objects
         public int turn { get; set; }
         public long PlayerOneId { get; set; }
         public long PlayerTwoId { get; set; }
+        public bool PlayerOneReady { get; set; }
+        public bool PlayerTwoReady { get; set; }
     }
 }

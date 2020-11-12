@@ -66,7 +66,9 @@ namespace Craft_client
                                 Id = session.Id,
                                 turn = 0,
                                 PlayerOneId = session.PlayerOneId,
-                                PlayerTwoId = Player.Id
+                                PlayerTwoId = Player.Id,
+                                PlayerOneReady = false,
+                                PlayerTwoReady = false
                             };
                             response = await client.PutAsJsonAsync(client.BaseAddress.PathAndQuery + "api/Sessions/" + $"{session.Id}", new_session); // add second player
 

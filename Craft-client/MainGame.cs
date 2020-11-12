@@ -41,6 +41,7 @@ namespace Craft_client
             client = _client;
             SessionId = _sessionId;
             level_name = _level_name;
+            PlayerId = _playerID;
         }
 
         private void MainGame_Load(object sender, EventArgs e)
@@ -115,7 +116,8 @@ namespace Craft_client
             int collumn = location.Y; //collumn
 
             //shoot
-
+            panel2.Enabled = false;
+            panel1.Enabled = false;
             //get information about the coordinate we shot at
         }
 
@@ -132,8 +134,14 @@ namespace Craft_client
             int row = location.X; //row
             int collumn = location.Y; //collumn
 
-            //place ships
-            Disable_Nearby_Buttons(row, collumn, clicked_Button); // log where and what ship was placed
+            //place ships while game state = 0 (deployment)
+            if (GameState == 0)
+            {
+                Disable_Nearby_Buttons(row, collumn, clicked_Button); // log where and what ship was placed
+            } else if (GameState == 3) // if player turn
+            {
+                //enable special skills
+            }
             
         }
 
@@ -188,7 +196,7 @@ namespace Craft_client
         /// </summary>
         private void Check_If_Ships_Created()
         {
-            if (unsent_ships_count == 9)
+            if (unsent_ships_count == 10)
             {
                 button1.Enabled = true; // enable start button
                 label4.Text = "All ready! Press start:"; // Label visible
@@ -257,10 +265,9 @@ namespace Craft_client
         {
             ships[unsent_ships_count].type = ship_type;
             ships[unsent_ships_count].Row[ships[unsent_ships_count].Size] = row;
-            Console.WriteLine("ROW --> "+row+"\n");
             ships[unsent_ships_count].Collumn[ships[unsent_ships_count].Size] = collumn;
             ships[unsent_ships_count].Size++;
-
+            
             return ships[unsent_ships_count];
         }
 
@@ -302,14 +309,23 @@ namespace Craft_client
             GameState = 1;
 
             button1.Text = "Loading";
-            button1.Enabled = true; // enable start button
+            button1.Enabled = false; // enable start button
             label4.Text = "Waiting for other player"; // Label visible
 
-            //send ships to server
+            //send ships to server (to do).
 
 
             //check if another player is ready
-            await Game.InitializeGame(client, SessionId, PlayerId);
+            GameState = await Game.InitializeGame(client, SessionId, PlayerId);
+
+            if (GameState == 2) // enemy turn
+            {
+                panel1.Enabled = false;
+
+            } else if (GameState == 3) // player turn
+            {
+                panel2.Enabled = true;
+            }
         }
     }
 }

@@ -41,9 +41,9 @@ namespace Craft_server.Controllers
             return session;
         }
 
-        // GET: api/Sessions/ready/2
+        // GET: api/Sessions/1/ready/2
         // Sets player as ready for a game / defines which player is ready
-        [HttpPost("{id}/ready/{playerId}")]
+        [HttpGet("{id}/ready/{playerId}")]
         public async Task<ActionResult<Session>> ReadySession(long id, long playerId)
         {
             var session = await _context.Sessions.FindAsync(id);
@@ -52,7 +52,6 @@ namespace Craft_server.Controllers
             {
                 return NotFound();
             }
-            Console.WriteLine("\n\n\n\n"+session.PlayerOneId + " - this is player one id - " + playerId);
 
             if (session.PlayerOneId == playerId) // check which player is ready
             {
@@ -81,7 +80,7 @@ namespace Craft_server.Controllers
                 }
             }
 
-            return NoContent();
+            return session;
         }
 
         // PUT: api/Sessions/5

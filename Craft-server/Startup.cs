@@ -13,6 +13,7 @@ using Microsoft.Extensions.Logging;
 using Microsoft.EntityFrameworkCore;
 using Craft_server.Models;
 using Craft_server.Models.Contexts;
+using Craft_server.Logger;
 
 namespace Craft_server
 {
@@ -36,6 +37,8 @@ namespace Craft_server
             services.AddDbContext<GameBoardContext>(opt => opt.UseInMemoryDatabase("GameBoardList"));
             services.AddDbContext<CoordinateContext>(opt => opt.UseInMemoryDatabase("CoordinateList"));
 
+            //logging of requests
+            services.AddDbContext<LoggerContext>(opt => opt.UseInMemoryDatabase("LoggerList"));
             services.AddControllers();
         }
 

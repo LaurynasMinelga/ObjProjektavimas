@@ -2,7 +2,7 @@ using System;
 
 namespace Craft_server
 {
-    public class WeatherForecast
+    public class Output
     {
         public DateTime Date { get; set; }
 

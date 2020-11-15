@@ -8,9 +8,16 @@ namespace Craft_client.objects
 {
     class GamePanel
     {
+        public enum Levels
+        {
+            Desert,
+            Swamp,
+            Sea,
+            Space
+        }
+
         public long Id { get; set; }
-        public string Name { get; set; }
         public long SessionId { get; set; }
-        public string Levels { get; set; }
+        public Levels Level { get; set; }
     }
 }

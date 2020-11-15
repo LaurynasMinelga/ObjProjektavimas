@@ -22,6 +22,7 @@ namespace Craft_client
         static long PlayerId; //current player id
         static long EnemyGameBoardId; // Enemy gameboard id (for shooting straight)
         static long PlayerGameBoardId; // Player gameboard id (to Power up your ships)
+        static long GamePanelId; // Game panel ID (it holds our level parameters)
 
         static int GameState = 0; // Game state = 0 (deployment) / 1 (started, but waiting for enemy deployment) / 2 (waiting for enemy move) / 3 (player turn)
 
@@ -313,6 +314,9 @@ namespace Craft_client
             button1.Text = "Loading";
             button1.Enabled = false; // enable start button
             label4.Text = "Waiting for other player"; // Label visible
+
+            //Create GamePanel
+            GamePanelId = await Game.CreateGamePanel(client, level_name, SessionId);
 
             //send ships to server
             await Game.PrepareShipsOnServer(client, ships, SessionId, PlayerId);

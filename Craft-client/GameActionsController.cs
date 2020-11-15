@@ -144,6 +144,53 @@ namespace Craft_client
             return gameboardId;
         }
 
+        public async Task<long> CreateGamePanel(HttpClient client, string level_name, long sessionID){
+            
+            Requests requests = new Requests();
+            GamePanel gamepanel = new GamePanel
+            {
+                SessionId = sessionID,
+                Level = GamePanel.Levels.Desert
+            };
+            switch (level_name)
+            {
+                case "Desert":
+                    gamepanel = new GamePanel
+                    {
+                        SessionId = sessionID,
+                        Level = GamePanel.Levels.Desert
+                    };
+                    break;
+                case "Swamp":
+                    gamepanel = new GamePanel
+                    {
+                        SessionId = sessionID,
+                        Level = GamePanel.Levels.Desert
+                    };
+                    break;
+                case "Sea":
+                    gamepanel = new GamePanel
+                    {
+                        SessionId = sessionID,
+                        Level = GamePanel.Levels.Desert
+                    };
+                    break;
+                case "Space":
+                    gamepanel = new GamePanel
+                    {
+                        SessionId = sessionID,
+                        Level = GamePanel.Levels.Desert
+                    };
+                    break;
+            }
+
+            var url = await requests.CreateAsync(gamepanel, client, "api/GamePanels"); // add gamepanel on server
+            HttpResponseMessage response = await client.GetAsync(url); //get gamepanel id
+            GamePanel gamepanel_new = await response.Content.ReadAsAsync<GamePanel>(); 
+
+            return gamepanel_new.Id;
+        }
+
 
     }
 }

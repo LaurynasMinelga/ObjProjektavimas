@@ -65,6 +65,8 @@
     <Compile Include="MainGame.Designer.cs">
       <DependentUpon>MainGame.cs</DependentUpon>
     </Compile>
+    <Compile Include="objects\Coordinate.cs" />
+    <Compile Include="objects\GameBoard.cs" />
     <Compile Include="objects\GamePanel.cs" />
     <Compile Include="objects\Player.cs" />
     <Compile Include="objects\Session.cs" />

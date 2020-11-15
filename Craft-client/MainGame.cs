@@ -20,6 +20,8 @@ namespace Craft_client
         static long SessionId; // Current session id
         static string level_name; // level string (Desert, Sea, Swamp, Space)
         static long PlayerId; //current player id
+        static long EnemyGameBoardId; // Enemy gameboard id (for shooting straight)
+        static long PlayerGameBoardId; // Player gameboard id (to Power up your ships)
 
         static int GameState = 0; // Game state = 0 (deployment) / 1 (started, but waiting for enemy deployment) / 2 (waiting for enemy move) / 3 (player turn)
 
@@ -312,19 +314,28 @@ namespace Craft_client
             button1.Enabled = false; // enable start button
             label4.Text = "Waiting for other player"; // Label visible
 
-            //send ships to server (to do).
-
+            //send ships to server
+            await Game.PrepareShipsOnServer(client, ships, SessionId, PlayerId);
+            Console.WriteLine("\n\nPassed 8");
 
             //check if another player is ready
             GameState = await Game.InitializeGame(client, SessionId, PlayerId);
 
+            //get enemy and player game board ids
+            EnemyGameBoardId = await Game.GetGameBoardId(client, SessionId, PlayerId, "Enemy");
+            PlayerGameBoardId = await Game.GetGameBoardId(client, SessionId, PlayerId, "Player");
+
+            Console.WriteLine("GAMEBOARD ID: "+EnemyGameBoardId+ " - player: "+PlayerGameBoardId);
+
             if (GameState == 2) // enemy turn
             {
                 panel1.Enabled = false;
+                label4.Text = "Opponents turn!";
 
             } else if (GameState == 3) // player turn
             {
                 panel2.Enabled = true;
+                label4.Text = "Your turn!";
             }
         }
     }

@@ -10,5 +10,6 @@ namespace Craft_client.objects
     {
         public long Id { get; set; }
         public string Name { get; set; }
+        public long GameBoardId { get; set; }
     }
 }

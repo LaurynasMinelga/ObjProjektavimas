@@ -24,10 +24,7 @@ namespace Craft_client
         static int GameState = 0; // Game state = 0 (deployment) / 1 (started, but waiting for enemy deployment) / 2 (waiting for enemy move) / 3 (player turn)
 
         static Ship[] ships = new Ship[10]; // Unsent ships log
-        UnitFactory SeaFactory = new SeaShipFactory();
-        UnitFactory DesertFactory = new DesertShipFactory();
-        UnitFactory SpaceFactory = new SpaceShipFactory();
-        UnitFactory SwampFactory = new SwampShipFactory();
+        Facade factories = new Facade();
         static int unsent_ships_count = 0; // count of ships already logged <- once 10 - initiate game
 
         //10x10 board of buttons a.k.a single game board
@@ -215,176 +212,9 @@ namespace Craft_client
         /// <param name="text"></param>
         private void Add_Ship_To_Log(int row, int collumn, string ship_type)
         {
-            switch (level_name)
-            {
-                case "Desert":
-                    switch (ship_type)
-                    {
-                        case "Cruiser":
-                            if (DesertFactory.CruiserCount < 4)
-                            {
-                                ships[unsent_ships_count] = DesertFactory.createCruiser(row, collumn, ship_type);
-                                DesertFactory.CruiserCount++;
-                                Console.WriteLine(DesertFactory.CruiserCount);
-                                unsent_ships_count++; //ship created
-                            }
-                            break;
-
-                        case "Submarine":
-                            if (DesertFactory.SubmarineCount < 3)
-                            {
-                                ships[unsent_ships_count] = DesertFactory.createSubmarine(row, collumn, ship_type);
-                                DesertFactory.SubmarineCount++;
-                                Console.WriteLine(DesertFactory.SubmarineCount);
-                                unsent_ships_count++; //ship created
-                            }
-                            break;
-
-                        case "Warship":
-                            if (DesertFactory.WarshipCount < 2)
-                            {
-                                ships[unsent_ships_count] = DesertFactory.createWarship(row, collumn, ship_type);
-                                DesertFactory.WarshipCount++;
-                                Console.WriteLine(DesertFactory.WarshipCount);
-                                unsent_ships_count++; //ship created
-                            }
-                            break;
-
-                        case "Aircarrier":
-                            if (DesertFactory.AircarrierCount < 1)
-                            {
-                                ships[unsent_ships_count] = DesertFactory.createAircarrier(row, collumn, ship_type);
-                                DesertFactory.AircarrierCount++;
-                                Console.WriteLine(DesertFactory.AircarrierCount);
-                                unsent_ships_count++; //ship created
-                            }
-                            break;
-                    }
-                    break;
-                case "Sea":
-                    switch (ship_type)
-                    {
-                        case "Cruiser":
-                            if (SeaFactory.CruiserCount < 4)
-                            {
-                                ships[unsent_ships_count] = SeaFactory.createCruiser(row, collumn, ship_type);
-                                SeaFactory.CruiserCount++;
-                                unsent_ships_count++; //ship created
-                            }
-                            break;
-
-                        case "Submarine":
-                            if (SeaFactory.SubmarineCount < 3)
-                            {
-                                ships[unsent_ships_count] = SeaFactory.createSubmarine(row, collumn, ship_type);
-                                SeaFactory.SubmarineCount++;
-                                unsent_ships_count++; //ship created
-                            }
-                            break;
-
-                        case "Warship":
-                            if (SeaFactory.WarshipCount < 2)
-                            {
-                                ships[unsent_ships_count] = SeaFactory.createWarship(row, collumn, ship_type);
-                                SeaFactory.WarshipCount++;
-                                unsent_ships_count++; //ship created
-                            }
-                            break;
-
-                        case "Aircarrier":
-                            if (SeaFactory.AircarrierCount < 1)
-                            {
-                                ships[unsent_ships_count] = SeaFactory.createAircarrier(row, collumn, ship_type);
-                                SeaFactory.AircarrierCount++;
-                                unsent_ships_count++; //ship created
-                            }
-                            break;
-                    }
-                    break;
-                case "Space":
-                    switch (ship_type)
-                    {
-                        case "Cruiser":
-                            if(SpaceFactory.CruiserCount < 4)
-                            {
-                                ships[unsent_ships_count] = SpaceFactory.createCruiser(row, collumn, ship_type);
-                                SpaceFactory.CruiserCount++;
-                                unsent_ships_count++; //ship created
-                            }
-                            break;
-
-                        case "Submarine":
-                            if(SpaceFactory.SubmarineCount < 3)
-                            {
-                                ships[unsent_ships_count] = SpaceFactory.createSubmarine(row, collumn, ship_type);
-                                SpaceFactory.SubmarineCount++;
-                                unsent_ships_count++; //ship created
-                            }
-                            break;
-
-                        case "Warship":
-                            if (SpaceFactory.WarshipCount < 2)
-                            {
-                                ships[unsent_ships_count] = SpaceFactory.createWarship(row, collumn, ship_type);
-                                SpaceFactory.WarshipCount++;
-                                unsent_ships_count++; //ship created
-                            }
-                            break;
-
-                        case "Aircarrier":
-                            if (SpaceFactory.AircarrierCount < 1)
-                            {
-                                ships[unsent_ships_count] = SpaceFactory.createAircarrier(row, collumn, ship_type);
-                                SpaceFactory.AircarrierCount++;
-                                unsent_ships_count++; //ship created
-                            }
-                            break;
-                    }
-                    break;
-
-                case "Swamp":
-                    switch (ship_type)
-                    {
-                        case "Cruiser":
-                            if (SwampFactory.CruiserCount < 4)
-                            {
-                                ships[unsent_ships_count] = SwampFactory.createCruiser(row, collumn, ship_type);
-                                SwampFactory.CruiserCount++;
-                                unsent_ships_count++; //ship created
-                            }
-                            break;
-
-                        case "Submarine":
-                            if (SwampFactory.SubmarineCount < 3)
-                            {
-                                ships[unsent_ships_count] = SwampFactory.createSubmarine(row, collumn, ship_type);
-                                SwampFactory.SubmarineCount++;
-                                unsent_ships_count++; //ship created
-                            }
-                            break;
-
-                        case "Warship":
-                            if (SwampFactory.WarshipCount < 2)
-                            {
-                                ships[unsent_ships_count] = SwampFactory.createWarship(row, collumn, ship_type);
-                                SwampFactory.WarshipCount++;
-                                unsent_ships_count++; //ship created
-                            }
-                            break;
-
-                        case "Aircarrier":
-                            if (SwampFactory.AircarrierCount < 1)
-                            {
-                                ships[unsent_ships_count] = SwampFactory.createAircarrier(row, collumn, ship_type);
-                                SwampFactory.AircarrierCount++;
-                                unsent_ships_count++; //ship created
-                            }
-                            break;
-                    }
-                    break;
-
-            }
-            
+            ships[unsent_ships_count] = factories.createShip(row, collumn, ship_type, level_name);
+            Console.WriteLine(ships[unsent_ships_count].getShipType());
+            unsent_ships_count++; //ship created
         }
              
 
@@ -448,6 +278,242 @@ namespace Craft_client
             } else if (GameState == 3) // player turn
             {
                 panel2.Enabled = true;
+            }
+        }
+        class Facade
+        {
+            private UnitFactory DesertFactory = new DesertShipFactory();
+            private UnitFactory SeaFactory = new SeaShipFactory();
+            private UnitFactory SpaceFactory = new SpaceShipFactory();
+            private UnitFactory SwampFactory = new SwampShipFactory();
+
+            public Ship createShip(int row, int collumn, string ship_type, string level_name)
+            {
+                Ship ship;
+                switch (level_name)
+                {
+                    case "Desert":
+                        switch (ship_type)
+                        {
+                            case "Cruiser":
+                                if (DesertFactory.CruiserCount < 4)
+                                {
+                                    ship = DesertFactory.createCruiser(row, collumn, ship_type);
+                                    DesertFactory.CruiserCount++;
+                                    return ship;
+                                }
+                                break;
+
+                            case "Submarine":
+                                if (DesertFactory.SubmarineCount < 3)
+                                {
+                                    ship = DesertFactory.createSubmarine(row, collumn, ship_type);
+                                    DesertFactory.SubmarineCount++;
+                                    return ship;
+                                }
+                                break;
+
+                            case "Warship":
+                                if (DesertFactory.WarshipCount < 2)
+                                {
+                                    ship = DesertFactory.createWarship(row, collumn, ship_type);
+                                    DesertFactory.WarshipCount++;
+                                    return ship;
+                                }
+                                break;
+
+                            case "Aircarrier":
+                                if (DesertFactory.AircarrierCount < 1)
+                                {
+                                    ship = DesertFactory.createAircarrier(row, collumn, ship_type);
+                                    DesertFactory.AircarrierCount++;
+                                    return ship;
+                                }
+                                break;
+                        }
+                        break;
+                    case "Sea":
+                        switch (ship_type)
+                        {
+                            case "Cruiser":
+                                if (SeaFactory.CruiserCount < 4)
+                                {
+                                    ship = SeaFactory.createCruiser(row, collumn, ship_type);
+                                    SeaFactory.CruiserCount++;
+                                    return ship;
+                                }
+                                break;
+
+                            case "Submarine":
+                                if (SeaFactory.SubmarineCount < 3)
+                                {
+                                    ship = SeaFactory.createSubmarine(row, collumn, ship_type);
+                                    SeaFactory.SubmarineCount++;
+                                    return ship;
+                                }
+                                break;
+
+                            case "Warship":
+                                if (SeaFactory.WarshipCount < 2)
+                                {
+                                    ship = SeaFactory.createWarship(row, collumn, ship_type);
+                                    SeaFactory.WarshipCount++;
+                                    return ship;
+                                }
+                                break;
+
+                            case "Aircarrier":
+                                if (SeaFactory.AircarrierCount < 1)
+                                {
+                                    ship = SeaFactory.createAircarrier(row, collumn, ship_type);
+                                    SeaFactory.AircarrierCount++;
+                                    return ship;
+                                }
+                                break;
+                        }
+                        break;
+                    case "Space":
+                        switch (ship_type)
+                        {
+                            case "Cruiser":
+                                if (SpaceFactory.CruiserCount < 4)
+                                {
+                                    ship = SpaceFactory.createCruiser(row, collumn, ship_type);
+                                    SpaceFactory.CruiserCount++;
+
+                                }
+                                break;
+
+                            case "Submarine":
+                                if (SpaceFactory.SubmarineCount < 3)
+                                {
+                                    ship = SpaceFactory.createSubmarine(row, collumn, ship_type);
+                                    SpaceFactory.SubmarineCount++;
+                                    return ship;
+                                }
+                                break;
+
+                            case "Warship":
+                                if (SpaceFactory.WarshipCount < 2)
+                                {
+                                    ship = SpaceFactory.createWarship(row, collumn, ship_type);
+                                    SpaceFactory.WarshipCount++;
+                                    return ship;
+                                }
+                                break;
+
+                            case "Aircarrier":
+                                if (SpaceFactory.AircarrierCount < 1)
+                                {
+                                    ship = SpaceFactory.createAircarrier(row, collumn, ship_type);
+                                    SpaceFactory.AircarrierCount++;
+                                    return ship;
+                                }
+                                break;
+                        }
+                        break;
+
+                    case "Swamp":
+                        switch (ship_type)
+                        {
+                            case "Cruiser":
+                                if (SwampFactory.CruiserCount < 4)
+                                {
+                                    ship = SwampFactory.createCruiser(row, collumn, ship_type);
+                                    SwampFactory.CruiserCount++;
+                                    return ship;
+                                }
+                                break;
+
+                            case "Submarine":
+                                if (SwampFactory.SubmarineCount < 3)
+                                {
+                                    ship = SwampFactory.createSubmarine(row, collumn, ship_type);
+                                    SwampFactory.SubmarineCount++;
+                                    return ship;
+                                }
+                                break;
+
+                            case "Warship":
+                                if (SwampFactory.WarshipCount < 2)
+                                {
+                                    ship = SwampFactory.createWarship(row, collumn, ship_type);
+                                    SwampFactory.WarshipCount++;
+                                    return ship;
+                                }
+                                break;
+
+                            case "Aircarrier":
+                                if (SwampFactory.AircarrierCount < 1)
+                                {
+                                    ship = SwampFactory.createAircarrier(row, collumn, ship_type);
+                                    SwampFactory.AircarrierCount++;
+                                    return ship;
+                                }
+                                break;
+                        }
+                        break;
+                }
+                return null;
+            }
+            public int remainingShips(string level_name, string ship_type)
+            {
+                switch (level_name)
+                {
+                    case "Desert":
+                        switch (ship_type)
+                        {
+                            case "Cruiser":
+                                return DesertFactory.CruiserCount;
+                            case "Submarine":
+                                return DesertFactory.SubmarineCount;
+                            case "Aircarrier":
+                                return DesertFactory.AircarrierCount;
+                            case "Warship":
+                                return DesertFactory.WarshipCount;
+                        }
+                        break;
+                    case "Sea":
+                        switch (ship_type)
+                        {
+                            case "Cruiser":
+                                return SeaFactory.CruiserCount;
+                            case "Submarine":
+                                return SeaFactory.SubmarineCount;
+                            case "Aircarrier":
+                                return SeaFactory.AircarrierCount;
+                            case "Warship":
+                                return SeaFactory.WarshipCount;
+                        }
+                        break;
+                    case "Swamp":
+                        switch (ship_type)
+                        {
+                            case "Cruiser":
+                                return SwampFactory.CruiserCount;
+                            case "Submarine":
+                                return SwampFactory.SubmarineCount;
+                            case "Aircarrier":
+                                return SwampFactory.AircarrierCount;
+                            case "Warship":
+                                return SwampFactory.WarshipCount;
+                        }
+                        break;
+                    case "Space":
+                        switch (ship_type)
+                        {
+                            case "Cruiser":
+                                return SpaceFactory.CruiserCount;
+                            case "Submarine":
+                                return SpaceFactory.SubmarineCount;
+                            case "Aircarrier":
+                                return SpaceFactory.AircarrierCount;
+                            case "Warship":
+                                return SpaceFactory.WarshipCount;
+                        }
+                        break;
+                }
+                return 0;
             }
         }
         abstract class UnitFactory

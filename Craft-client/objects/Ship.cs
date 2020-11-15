@@ -10,7 +10,6 @@ namespace Craft_client.objects
     {
         public long Id;
 
-        public int Size = 0;
         public abstract string getShipType();
         public abstract int getShipRow();
 

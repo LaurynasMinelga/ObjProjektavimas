@@ -5,6 +5,6 @@
     "\\Craft-client\\objects",
     "\\Craft-server"
   ],
-  "SelectedNode": "\\Craft-client\\Craft-client.sln",
+  "SelectedNode": "\\Craft-server\\Startup.cs",
   "PreviewInSolutionExplorer": false
 }

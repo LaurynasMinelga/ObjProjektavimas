@@ -31,7 +31,17 @@ namespace Craft_client
         Button[,] button_grid_player = new Button[10, 10];
         Button[,] button_grid_enemy = new Button[10, 10];
 
-        ShipPlacementController PlaceShip = new ShipPlacementController(); // ship placement methods
+        public int[] Ship_Count = new int[4] { 4, 6, 6, 4 };
+        // Log for last ships placed
+        public int[] Last_Row = new int[100];
+        public int[] Last_Collumn = new int[100];
+        public int Last_step_count = 0;
+
+        ShipPlacementController PlaceAircarrier = new ShipPlacementController(new AircarrierPlaced());
+        ShipPlacementController PlaceWarship = new ShipPlacementController(new WarshipPlaced());
+        ShipPlacementController PlaceSubmarine = new ShipPlacementController(new SubmarinePlaced());
+        ShipPlacementController PlaceCruiser = new ShipPlacementController(new CruiserPlaced());
+
         GameActionsController Game = new GameActionsController(); // game actions methods
 
         public MainGame(HttpClient _client, long _sessionId, string _level_name, long _playerID)
@@ -164,29 +174,30 @@ namespace Craft_client
                     {
                         case "Cruiser":
                             Disable_Radio_Buttons(radio_button, 0);
-                            button_grid_player = PlaceShip.Cruiser_Placed(row, collumn, button_grid_player);
+                            button_grid_player = PlaceCruiser.ShipPlaced(row, collumn, button_grid_player, Ship_Count, Last_Row, Last_Collumn, Last_step_count);
                             clicked_Button.BackColor = Color.Aqua;
                         break;
 
                         case "Submarine":
                             Disable_Radio_Buttons(radio_button, 1);
-                            button_grid_player = PlaceShip.Submarine_Placed(row, collumn, button_grid_player);
+                            button_grid_player = PlaceSubmarine.ShipPlaced(row, collumn, button_grid_player, Ship_Count, Last_Row, Last_Collumn, Last_step_count);
                             clicked_Button.BackColor = Color.Azure;
                             break;
 
                         case "Warship":
                             Disable_Radio_Buttons(radio_button, 2);
-                            button_grid_player = PlaceShip.Warship_Placed(row, collumn, button_grid_player);
+                            button_grid_player = PlaceWarship.ShipPlaced(row, collumn, button_grid_player, Ship_Count, Last_Row, Last_Collumn, Last_step_count);
                             clicked_Button.BackColor = Color.Bisque;
                             break;
 
                         case "Aircarrier":
                             Disable_Radio_Buttons(radio_button, 3);
-                            button_grid_player = PlaceShip.Aircarrier_Placed(row, collumn, button_grid_player);
+                            button_grid_player = PlaceAircarrier.ShipPlaced(row, collumn, button_grid_player, Ship_Count, Last_Row, Last_Collumn, Last_step_count);
                             clicked_Button.BackColor = Color.BlueViolet;
                             break;
                     }
-                PlaceShip.Last_step_count++; //placement was made, coordinates of placement will be added to Last_row and Last_collumn
+
+                Last_step_count++; //placement was made, coordinates of placement will be added to Last_row and Last_collumn
                 Add_Ship_To_Log(row, collumn, radio_button.Text);
                 Check_If_Ships_Created();
             }
@@ -225,31 +236,31 @@ namespace Craft_client
         {
             if(ship_number == 1)
             {
-                PlaceShip.Ship_Count[ship_number] = PlaceShip.Ship_Count[ship_number] - 2;
+                Ship_Count[ship_number] = Ship_Count[ship_number] - 2;
             }
             else if(ship_number == 2)
             {
-                PlaceShip.Ship_Count[ship_number] = PlaceShip.Ship_Count[ship_number] - 3;
+                Ship_Count[ship_number] = Ship_Count[ship_number] - 3;
             }
             else if(ship_number == 3)
             {
-                PlaceShip.Ship_Count[ship_number] = PlaceShip.Ship_Count[ship_number] - 4;
+                Ship_Count[ship_number] = Ship_Count[ship_number] - 4;
             }
             else
             {
-                PlaceShip.Ship_Count[ship_number]--;
+                Ship_Count[ship_number]--;
             }
             
-            Console.WriteLine(PlaceShip.Ship_Count[ship_number]);
-            if (PlaceShip.Ship_Count[ship_number] == 0)
+            Console.WriteLine(Ship_Count[ship_number]);
+            if (Ship_Count[ship_number] == 0)
             {
                 radio_button.Enabled = false;
                 radio_button.Checked = false;
             }
-            label5.Text = PlaceShip.Ship_Count[0].ToString();
-            label6.Text = (PlaceShip.Ship_Count[1] / 2).ToString();
-            label7.Text = (PlaceShip.Ship_Count[2] / 3).ToString();
-            label8.Text = (PlaceShip.Ship_Count[3] / 4).ToString();
+            label5.Text = Ship_Count[0].ToString();
+            label6.Text = (Ship_Count[1] / 2).ToString();
+            label7.Text = (Ship_Count[2] / 3).ToString();
+            label8.Text = (Ship_Count[3] / 4).ToString();
         }
 
         /// <summary>

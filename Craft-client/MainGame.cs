@@ -268,6 +268,7 @@ namespace Craft_client
                             if (SeaFactory.CruiserCount < 4)
                             {
                                 ships[unsent_ships_count] = SeaFactory.createCruiser(row, collumn, ship_type);
+                                SeaFactory.CruiserCount++;
                                 unsent_ships_count++; //ship created
                             }
                             break;
@@ -276,6 +277,7 @@ namespace Craft_client
                             if (SeaFactory.SubmarineCount < 3)
                             {
                                 ships[unsent_ships_count] = SeaFactory.createSubmarine(row, collumn, ship_type);
+                                SeaFactory.SubmarineCount++;
                                 unsent_ships_count++; //ship created
                             }
                             break;
@@ -284,14 +286,16 @@ namespace Craft_client
                             if (SeaFactory.WarshipCount < 2)
                             {
                                 ships[unsent_ships_count] = SeaFactory.createWarship(row, collumn, ship_type);
+                                SeaFactory.WarshipCount++;
                                 unsent_ships_count++; //ship created
                             }
                             break;
 
                         case "Aircarrier":
-                            if (SeaFactory.WarshipCount < 1)
+                            if (SeaFactory.AircarrierCount < 1)
                             {
                                 ships[unsent_ships_count] = SeaFactory.createAircarrier(row, collumn, ship_type);
+                                SeaFactory.AircarrierCount++;
                                 unsent_ships_count++; //ship created
                             }
                             break;
@@ -304,6 +308,7 @@ namespace Craft_client
                             if(SpaceFactory.CruiserCount < 4)
                             {
                                 ships[unsent_ships_count] = SpaceFactory.createCruiser(row, collumn, ship_type);
+                                SpaceFactory.CruiserCount++;
                                 unsent_ships_count++; //ship created
                             }
                             break;
@@ -312,6 +317,7 @@ namespace Craft_client
                             if(SpaceFactory.SubmarineCount < 3)
                             {
                                 ships[unsent_ships_count] = SpaceFactory.createSubmarine(row, collumn, ship_type);
+                                SpaceFactory.SubmarineCount++;
                                 unsent_ships_count++; //ship created
                             }
                             break;
@@ -320,14 +326,16 @@ namespace Craft_client
                             if (SpaceFactory.WarshipCount < 2)
                             {
                                 ships[unsent_ships_count] = SpaceFactory.createWarship(row, collumn, ship_type);
+                                SpaceFactory.WarshipCount++;
                                 unsent_ships_count++; //ship created
                             }
                             break;
 
                         case "Aircarrier":
-                            if (SpaceFactory.WarshipCount < 1)
+                            if (SpaceFactory.AircarrierCount < 1)
                             {
                                 ships[unsent_ships_count] = SpaceFactory.createAircarrier(row, collumn, ship_type);
+                                SpaceFactory.AircarrierCount++;
                                 unsent_ships_count++; //ship created
                             }
                             break;
@@ -341,6 +349,7 @@ namespace Craft_client
                             if (SwampFactory.CruiserCount < 4)
                             {
                                 ships[unsent_ships_count] = SwampFactory.createCruiser(row, collumn, ship_type);
+                                SwampFactory.CruiserCount++;
                                 unsent_ships_count++; //ship created
                             }
                             break;
@@ -349,6 +358,7 @@ namespace Craft_client
                             if (SwampFactory.SubmarineCount < 3)
                             {
                                 ships[unsent_ships_count] = SwampFactory.createSubmarine(row, collumn, ship_type);
+                                SwampFactory.SubmarineCount++;
                                 unsent_ships_count++; //ship created
                             }
                             break;
@@ -357,14 +367,16 @@ namespace Craft_client
                             if (SwampFactory.WarshipCount < 2)
                             {
                                 ships[unsent_ships_count] = SwampFactory.createWarship(row, collumn, ship_type);
+                                SwampFactory.WarshipCount++;
                                 unsent_ships_count++; //ship created
                             }
                             break;
 
                         case "Aircarrier":
-                            if (SwampFactory.WarshipCount < 1)
+                            if (SwampFactory.AircarrierCount < 1)
                             {
                                 ships[unsent_ships_count] = SwampFactory.createAircarrier(row, collumn, ship_type);
+                                SwampFactory.AircarrierCount++;
                                 unsent_ships_count++; //ship created
                             }
                             break;

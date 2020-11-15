@@ -13,3 +13,19 @@ G:\KaTeU\8 semestras\game\ObjProjektavimas\Craft-client\bin\Debug\Newtonsoft.Jso
 G:\KaTeU\8 semestras\game\ObjProjektavimas\Craft-client\bin\Debug\System.Net.Http.Formatting.xml
 G:\KaTeU\8 semestras\game\ObjProjektavimas\Craft-client\obj\Debug\Craft_client.MainGame.resources
 G:\KaTeU\8 semestras\game\ObjProjektavimas\Craft-client\obj\Debug\Craft-client.csproj.CopyComplete
+C:\Users\Kon\Documents\GitHub\ObjProjektavimas\Craft-client\bin\Debug\Craft-client.exe.config
+C:\Users\Kon\Documents\GitHub\ObjProjektavimas\Craft-client\bin\Debug\Craft-client.exe
+C:\Users\Kon\Documents\GitHub\ObjProjektavimas\Craft-client\bin\Debug\Craft-client.pdb
+C:\Users\Kon\Documents\GitHub\ObjProjektavimas\Craft-client\bin\Debug\Newtonsoft.Json.dll
+C:\Users\Kon\Documents\GitHub\ObjProjektavimas\Craft-client\bin\Debug\System.Net.Http.Formatting.dll
+C:\Users\Kon\Documents\GitHub\ObjProjektavimas\Craft-client\bin\Debug\Newtonsoft.Json.xml
+C:\Users\Kon\Documents\GitHub\ObjProjektavimas\Craft-client\bin\Debug\System.Net.Http.Formatting.xml
+C:\Users\Kon\Documents\GitHub\ObjProjektavimas\Craft-client\obj\Debug\Craft-client.csprojAssemblyReference.cache
+C:\Users\Kon\Documents\GitHub\ObjProjektavimas\Craft-client\obj\Debug\Craft_client.Lobby.resources
+C:\Users\Kon\Documents\GitHub\ObjProjektavimas\Craft-client\obj\Debug\Craft_client.MainGame.resources
+C:\Users\Kon\Documents\GitHub\ObjProjektavimas\Craft-client\obj\Debug\Craft_client.Properties.Resources.resources
+C:\Users\Kon\Documents\GitHub\ObjProjektavimas\Craft-client\obj\Debug\Craft-client.csproj.GenerateResource.cache
+C:\Users\Kon\Documents\GitHub\ObjProjektavimas\Craft-client\obj\Debug\Craft-client.csproj.CoreCompileInputs.cache
+C:\Users\Kon\Documents\GitHub\ObjProjektavimas\Craft-client\obj\Debug\Craft-client.csproj.CopyComplete
+C:\Users\Kon\Documents\GitHub\ObjProjektavimas\Craft-client\obj\Debug\Craft-client.exe
+C:\Users\Kon\Documents\GitHub\ObjProjektavimas\Craft-client\obj\Debug\Craft-client.pdb

@@ -6,12 +6,14 @@ using System.Threading.Tasks;
 
 namespace Craft_client.objects
 {
-    class Ship
+    abstract class Ship
     {
-        public long Id { get; set; }
-        public int[] Row { get; set; }
-        public int[] Collumn { get; set; }
-        public string type { get; set; }
-        public int Size { get; set; }
+        public long Id;
+
+        public int Size = 0;
+        public abstract string getShipType();
+        public abstract int getShipRow();
+
+        public abstract int getShipCollumn();
     }
 }

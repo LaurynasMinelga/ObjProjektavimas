@@ -24,6 +24,10 @@ namespace Craft_client
         static int GameState = 0; // Game state = 0 (deployment) / 1 (started, but waiting for enemy deployment) / 2 (waiting for enemy move) / 3 (player turn)
 
         static Ship[] ships = new Ship[10]; // Unsent ships log
+        UnitFactory SeaFactory = new SeaShipFactory();
+        UnitFactory DesertFactory = new DesertShipFactory();
+        UnitFactory SpaceFactory = new SpaceShipFactory();
+        UnitFactory SwampFactory = new SwampShipFactory();
         static int unsent_ships_count = 0; // count of ships already logged <- once 10 - initiate game
 
         //10x10 board of buttons a.k.a single game board
@@ -202,7 +206,7 @@ namespace Craft_client
                 label4.Text = "All ready! Press start:"; // Label visible
             }
         }
-
+       
         /// <summary>
         /// Assign ship object for sending to server
         /// </summary>
@@ -211,83 +215,190 @@ namespace Craft_client
         /// <param name="text"></param>
         private void Add_Ship_To_Log(int row, int collumn, string ship_type)
         {
-
-            if (ships[unsent_ships_count]==null)// check if object exists
+            switch (level_name)
             {
-                Initialize_Ship_Object();
+                case "Desert":
+                    switch (ship_type)
+                    {
+                        case "Cruiser":
+                            if (DesertFactory.CruiserCount < 4)
+                            {
+                                ships[unsent_ships_count] = DesertFactory.createCruiser(row, collumn, ship_type);
+                                DesertFactory.CruiserCount++;
+                                Console.WriteLine(DesertFactory.CruiserCount);
+                                unsent_ships_count++; //ship created
+                            }
+                            break;
+
+                        case "Submarine":
+                            if (DesertFactory.SubmarineCount < 3)
+                            {
+                                ships[unsent_ships_count] = DesertFactory.createSubmarine(row, collumn, ship_type);
+                                DesertFactory.SubmarineCount++;
+                                Console.WriteLine(DesertFactory.SubmarineCount);
+                                unsent_ships_count++; //ship created
+                            }
+                            break;
+
+                        case "Warship":
+                            if (DesertFactory.WarshipCount < 2)
+                            {
+                                ships[unsent_ships_count] = DesertFactory.createWarship(row, collumn, ship_type);
+                                DesertFactory.WarshipCount++;
+                                Console.WriteLine(DesertFactory.WarshipCount);
+                                unsent_ships_count++; //ship created
+                            }
+                            break;
+
+                        case "Aircarrier":
+                            if (DesertFactory.AircarrierCount < 1)
+                            {
+                                ships[unsent_ships_count] = DesertFactory.createAircarrier(row, collumn, ship_type);
+                                DesertFactory.AircarrierCount++;
+                                Console.WriteLine(DesertFactory.AircarrierCount);
+                                unsent_ships_count++; //ship created
+                            }
+                            break;
+                    }
+                    break;
+                case "Sea":
+                    switch (ship_type)
+                    {
+                        case "Cruiser":
+                            if (SeaFactory.CruiserCount < 4)
+                            {
+                                ships[unsent_ships_count] = SeaFactory.createCruiser(row, collumn, ship_type);
+                                unsent_ships_count++; //ship created
+                            }
+                            break;
+
+                        case "Submarine":
+                            if (SeaFactory.SubmarineCount < 3)
+                            {
+                                ships[unsent_ships_count] = SeaFactory.createSubmarine(row, collumn, ship_type);
+                                unsent_ships_count++; //ship created
+                            }
+                            break;
+
+                        case "Warship":
+                            if (SeaFactory.WarshipCount < 2)
+                            {
+                                ships[unsent_ships_count] = SeaFactory.createWarship(row, collumn, ship_type);
+                                unsent_ships_count++; //ship created
+                            }
+                            break;
+
+                        case "Aircarrier":
+                            if (SeaFactory.WarshipCount < 1)
+                            {
+                                ships[unsent_ships_count] = SeaFactory.createAircarrier(row, collumn, ship_type);
+                                unsent_ships_count++; //ship created
+                            }
+                            break;
+                    }
+                    break;
+                case "Space":
+                    switch (ship_type)
+                    {
+                        case "Cruiser":
+                            if(SpaceFactory.CruiserCount < 4)
+                            {
+                                ships[unsent_ships_count] = SpaceFactory.createCruiser(row, collumn, ship_type);
+                                unsent_ships_count++; //ship created
+                            }
+                            break;
+
+                        case "Submarine":
+                            if(SpaceFactory.SubmarineCount < 3)
+                            {
+                                ships[unsent_ships_count] = SpaceFactory.createSubmarine(row, collumn, ship_type);
+                                unsent_ships_count++; //ship created
+                            }
+                            break;
+
+                        case "Warship":
+                            if (SpaceFactory.WarshipCount < 2)
+                            {
+                                ships[unsent_ships_count] = SpaceFactory.createWarship(row, collumn, ship_type);
+                                unsent_ships_count++; //ship created
+                            }
+                            break;
+
+                        case "Aircarrier":
+                            if (SpaceFactory.WarshipCount < 1)
+                            {
+                                ships[unsent_ships_count] = SpaceFactory.createAircarrier(row, collumn, ship_type);
+                                unsent_ships_count++; //ship created
+                            }
+                            break;
+                    }
+                    break;
+
+                case "Swamp":
+                    switch (ship_type)
+                    {
+                        case "Cruiser":
+                            if (SwampFactory.CruiserCount < 4)
+                            {
+                                ships[unsent_ships_count] = SwampFactory.createCruiser(row, collumn, ship_type);
+                                unsent_ships_count++; //ship created
+                            }
+                            break;
+
+                        case "Submarine":
+                            if (SwampFactory.SubmarineCount < 3)
+                            {
+                                ships[unsent_ships_count] = SwampFactory.createSubmarine(row, collumn, ship_type);
+                                unsent_ships_count++; //ship created
+                            }
+                            break;
+
+                        case "Warship":
+                            if (SwampFactory.WarshipCount < 2)
+                            {
+                                ships[unsent_ships_count] = SwampFactory.createWarship(row, collumn, ship_type);
+                                unsent_ships_count++; //ship created
+                            }
+                            break;
+
+                        case "Aircarrier":
+                            if (SwampFactory.WarshipCount < 1)
+                            {
+                                ships[unsent_ships_count] = SwampFactory.createAircarrier(row, collumn, ship_type);
+                                unsent_ships_count++; //ship created
+                            }
+                            break;
+                    }
+                    break;
+
             }
-            switch (ship_type)
-            {
-                case "Cruiser":
-                    ships[unsent_ships_count] = SetShip(row, collumn, ship_type);
-                    unsent_ships_count++; //ship created
-                    break;
-
-                case "Submarine":
-                    if (ships[unsent_ships_count].Size == 0)
-                    {
-                        ships[unsent_ships_count] = SetShip(row, collumn, ship_type);
-                    }
-                    else
-                    {
-                        ships[unsent_ships_count] = SetShip(row, collumn, ship_type);
-                        unsent_ships_count++; //ship created
-                    }
-                    break;
-
-                case "Warship":
-                    if (ships[unsent_ships_count].Size == 0 || ships[unsent_ships_count].Size == 1)
-                    {
-                        ships[unsent_ships_count] = SetShip(row, collumn, ship_type);
-                    }
-                    else
-                    {
-                        ships[unsent_ships_count] = SetShip(row, collumn, ship_type);
-                        unsent_ships_count++; //ship created
-                    }
-                    break;
-
-                case "Aircarrier":
-                    if (ships[unsent_ships_count].Size == 0 || ships[unsent_ships_count].Size == 1 || ships[unsent_ships_count].Size == 2)
-                    {
-                        ships[unsent_ships_count] = SetShip(row, collumn, ship_type);
-                    }
-                    else
-                    {
-                        ships[unsent_ships_count] = SetShip(row, collumn, ship_type);
-                        unsent_ships_count++; //ship created
-                    }
-                    break;
-            }
-        }
-
-        private Ship SetShip(int row, int collumn, string ship_type)
-        {
-            ships[unsent_ships_count].type = ship_type;
-            ships[unsent_ships_count].Row[ships[unsent_ships_count].Size] = row;
-            ships[unsent_ships_count].Collumn[ships[unsent_ships_count].Size] = collumn;
-            ships[unsent_ships_count].Size++;
             
-            return ships[unsent_ships_count];
         }
-
-        private void Initialize_Ship_Object()
-        {
-                ships[unsent_ships_count] = new Ship
-                {
-                    Row = new int[] { 0, 0, 0, 0 },
-                    Collumn = new int[] { 0, 0, 0, 0 },
-                    type = null,
-                    Size = 0
-                };
-        }
+             
 
         /// <summary>
         /// Disable radio buttons limiting number of ships available
         /// </summary>
         private void Disable_Radio_Buttons(RadioButton radio_button, int ship_number)
         {
-            PlaceShip.Ship_Count[ship_number]--;
+            if(ship_number == 1)
+            {
+                PlaceShip.Ship_Count[ship_number] = PlaceShip.Ship_Count[ship_number] - 2;
+            }
+            else if(ship_number == 2)
+            {
+                PlaceShip.Ship_Count[ship_number] = PlaceShip.Ship_Count[ship_number] - 3;
+            }
+            else if(ship_number == 3)
+            {
+                PlaceShip.Ship_Count[ship_number] = PlaceShip.Ship_Count[ship_number] - 4;
+            }
+            else
+            {
+                PlaceShip.Ship_Count[ship_number]--;
+            }
+            
+            Console.WriteLine(PlaceShip.Ship_Count[ship_number]);
             if (PlaceShip.Ship_Count[ship_number] == 0)
             {
                 radio_button.Enabled = false;
@@ -326,6 +437,564 @@ namespace Craft_client
             {
                 panel2.Enabled = true;
             }
+        }
+        abstract class UnitFactory
+        {
+            public int CruiserCount = 0;
+            public int WarshipCount = 0;
+            public int AircarrierCount = 0;
+            public int SubmarineCount = 0;
+
+            public abstract Ship createCruiser(int row, int collumn, string ship_type);
+            public abstract Ship createWarship(int row, int collumn, string ship_type);
+            public abstract Ship createAircarrier(int row, int collumn, string ship_type);
+
+            public abstract Ship createSubmarine(int row, int collumn, string ship_type);
+        }
+        class DesertShipFactory : UnitFactory
+        {
+
+            public override Ship createCruiser(int row, int collumn, string ship_type)
+            {
+                return new DesertCruiser(row, collumn, ship_type);
+            }
+            public override Ship createWarship(int row, int collumn, string ship_type)
+            {
+                return new DesertWarship(row, collumn, ship_type);
+            }
+            public override Ship createAircarrier(int row, int collumn, string ship_type)
+            {
+                return new DesertAircarrier(row, collumn, ship_type);
+            }
+            public override Ship createSubmarine(int row, int collumn, string ship_type)
+            {
+                return new DesertSubmarine(row, collumn, ship_type);
+            }
+        }
+        class SwampShipFactory : UnitFactory
+        {
+
+            public override Ship createCruiser(int row, int collumn, string ship_type)
+            {
+                return new SwampCruiser(row, collumn, ship_type);
+            }
+            public override Ship createWarship(int row, int collumn, string ship_type)
+            {
+                return new SwampWarship(row, collumn, ship_type);
+            }
+            public override Ship createAircarrier(int row, int collumn, string ship_type)
+            {
+                return new SwampAircarrier(row, collumn, ship_type);
+            }
+            public override Ship createSubmarine(int row, int collumn, string ship_type)
+            {
+                return new SwampSubmarine(row, collumn, ship_type);
+            }
+        }
+        class SeaShipFactory : UnitFactory
+        {
+
+            public override Ship createCruiser(int row, int collumn, string ship_type)
+            {
+                return new SeaCruiser(row, collumn, ship_type);
+            }
+            public override Ship createWarship(int row, int collumn, string ship_type)
+            {
+                return new SeaWarship(row, collumn, ship_type);
+            }
+            public override Ship createAircarrier(int row, int collumn, string ship_type)
+            {
+                return new SeaAircarrier(row, collumn, ship_type);
+            }
+            public override Ship createSubmarine(int row, int collumn, string ship_type)
+            {
+                return new SeaSubmarine(row, collumn, ship_type);
+            }
+        }
+        class SpaceShipFactory : UnitFactory
+        {
+
+            public override Ship createCruiser(int row, int collumn, string ship_type)
+            {
+                return new SpaceCruiser(row, collumn, ship_type);
+            }
+            public override Ship createWarship(int row, int collumn, string ship_type)
+            {
+                return new SpaceWarship(row, collumn, ship_type);
+            }
+            public override Ship createAircarrier(int row, int collumn, string ship_type)
+            {
+                return new SpaceAircarrier(row, collumn, ship_type);
+            }
+            public override Ship createSubmarine(int row, int collumn, string ship_type)
+            {
+                return new SpaceSubmarine(row, collumn, ship_type);
+            }
+        }       
+
+        class DesertCruiser : Ship
+        {
+            int Row;
+            int Collumn;
+            string Ship_type;
+
+            public DesertCruiser(int row, int collumn, string ship_type)
+            {
+                this.Row = row;
+                this.Collumn = collumn;
+                this.Ship_type = ship_type;
+            }
+            public override string getShipType()
+            {
+
+                return Ship_type;
+            }
+
+            public override int getShipRow()
+            {
+                return Row;
+            }
+
+            public override int getShipCollumn()
+            {
+                return Collumn;
+            }
+
+        }
+        class DesertSubmarine : Ship
+        {
+            int Row;
+            int Collumn;
+            string Ship_type;
+
+            public DesertSubmarine(int row, int collumn, string ship_type)
+            {
+                this.Row = row;
+                this.Collumn = collumn;
+                this.Ship_type = ship_type;
+            }
+            public override string getShipType()
+            {
+
+                return Ship_type;
+            }
+
+            public override int getShipRow()
+            {
+                return Row;
+            }
+
+            public override int getShipCollumn()
+            {
+                return Collumn;
+            }
+
+        }
+        class DesertWarship : Ship
+        {
+            int Row;
+            int Collumn;
+            string Ship_type;
+
+            public DesertWarship(int row, int collumn, string ship_type)
+            {
+                this.Row = row;
+                this.Collumn = collumn;
+                this.Ship_type = ship_type;
+            }
+            public override string getShipType()
+            {
+
+                return Ship_type;
+            }
+
+            public override int getShipRow()
+            {
+                return Row;
+            }
+
+            public override int getShipCollumn()
+            {
+                return Collumn;
+            }
+
+        }
+        class DesertAircarrier : Ship
+        {
+            int Row;
+            int Collumn;
+            string Ship_type;
+
+            public DesertAircarrier(int row, int collumn, string ship_type)
+            {
+                this.Row = row;
+                this.Collumn = collumn;
+                this.Ship_type = ship_type;
+            }
+            public override string getShipType()
+            {
+
+                return Ship_type;
+            }
+
+            public override int getShipRow()
+            {
+                return Row;
+            }
+
+            public override int getShipCollumn()
+            {
+                return Collumn;
+            }
+
+        }
+        class SwampCruiser : Ship
+        {
+            int Row;
+            int Collumn;
+            string Ship_type;
+
+            public SwampCruiser(int row, int collumn, string ship_type)
+            {
+                this.Row = row;
+                this.Collumn = collumn;
+                this.Ship_type = ship_type;
+            }
+            public override string getShipType()
+            {
+
+                return Ship_type;
+            }
+
+            public override int getShipRow()
+            {
+                return Row;
+            }
+
+            public override int getShipCollumn()
+            {
+                return Collumn;
+            }
+
+        }
+        class SwampSubmarine : Ship
+        {
+            int Row;
+            int Collumn;
+            string Ship_type;
+
+            public SwampSubmarine(int row, int collumn, string ship_type)
+            {
+                this.Row = row;
+                this.Collumn = collumn;
+                this.Ship_type = ship_type;
+            }
+            public override string getShipType()
+            {
+
+                return Ship_type;
+            }
+
+            public override int getShipRow()
+            {
+                return Row;
+            }
+
+            public override int getShipCollumn()
+            {
+                return Collumn;
+            }
+
+        }
+        class SwampWarship : Ship
+        {
+            int Row;
+            int Collumn;
+            string Ship_type;
+
+            public SwampWarship(int row, int collumn, string ship_type)
+            {
+                this.Row = row;
+                this.Collumn = collumn;
+                this.Ship_type = ship_type;
+            }
+            public override string getShipType()
+            {
+
+                return Ship_type;
+            }
+
+            public override int getShipRow()
+            {
+                return Row;
+            }
+
+            public override int getShipCollumn()
+            {
+                return Collumn;
+            }
+
+        }
+        class SwampAircarrier : Ship
+        {
+            int Row;
+            int Collumn;
+            string Ship_type;
+
+            public SwampAircarrier(int row, int collumn, string ship_type)
+            {
+                this.Row = row;
+                this.Collumn = collumn;
+                this.Ship_type = ship_type;
+            }
+            public override string getShipType()
+            {
+
+                return Ship_type;
+            }
+
+            public override int getShipRow()
+            {
+                return Row;
+            }
+
+            public override int getShipCollumn()
+            {
+                return Collumn;
+            }
+
+        }
+        class SeaCruiser : Ship
+        {
+            int Row;
+            int Collumn;
+            string Ship_type;
+
+            public SeaCruiser(int row, int collumn, string ship_type)
+            {
+                this.Row = row;
+                this.Collumn = collumn;
+                this.Ship_type = ship_type;
+            }
+            public override string getShipType()
+            {
+
+                return Ship_type;
+            }
+
+            public override int getShipRow()
+            {
+                return Row;
+            }
+
+            public override int getShipCollumn()
+            {
+                return Collumn;
+            }
+
+        }
+        class SeaSubmarine : Ship
+        {
+            int Row;
+            int Collumn;
+            string Ship_type;
+
+            public SeaSubmarine(int row, int collumn, string ship_type)
+            {
+                this.Row = row;
+                this.Collumn = collumn;
+                this.Ship_type = ship_type;
+            }
+            public override string getShipType()
+            {
+
+                return Ship_type;
+            }
+
+            public override int getShipRow()
+            {
+                return Row;
+            }
+
+            public override int getShipCollumn()
+            {
+                return Collumn;
+            }
+
+        }
+        class SeaWarship : Ship
+        {
+            int Row;
+            int Collumn;
+            string Ship_type;
+
+            public SeaWarship(int row, int collumn, string ship_type)
+            {
+                this.Row = row;
+                this.Collumn = collumn;
+                this.Ship_type = ship_type;
+            }
+            public override string getShipType()
+            {
+
+                return Ship_type;
+            }
+
+            public override int getShipRow()
+            {
+                return Row;
+            }
+
+            public override int getShipCollumn()
+            {
+                return Collumn;
+            }
+
+        }
+        class SeaAircarrier : Ship
+        {
+            int Row;
+            int Collumn;
+            string Ship_type;
+
+            public SeaAircarrier(int row, int collumn, string ship_type)
+            {
+                this.Row = row;
+                this.Collumn = collumn;
+                this.Ship_type = ship_type;
+            }
+            public override string getShipType()
+            {
+
+                return Ship_type;
+            }
+
+            public override int getShipRow()
+            {
+                return Row;
+            }
+
+            public override int getShipCollumn()
+            {
+                return Collumn;
+            }
+
+        }
+        class SpaceCruiser : Ship
+        {
+            int Row;
+            int Collumn;
+            string Ship_type;
+
+            public SpaceCruiser(int row, int collumn, string ship_type)
+            {
+                this.Row = row;
+                this.Collumn = collumn;
+                this.Ship_type = ship_type;
+            }
+            public override string getShipType()
+            {
+
+                return Ship_type;
+            }
+
+            public override int getShipRow()
+            {
+                return Row;
+            }
+
+            public override int getShipCollumn()
+            {
+                return Collumn;
+            }
+
+        }
+        class SpaceSubmarine : Ship
+        {
+            int Row;
+            int Collumn;
+            string Ship_type;
+
+            public SpaceSubmarine(int row, int collumn, string ship_type)
+            {
+                this.Row = row;
+                this.Collumn = collumn;
+                this.Ship_type = ship_type;
+            }
+            public override string getShipType()
+            {
+
+                return Ship_type;
+            }
+
+            public override int getShipRow()
+            {
+                return Row;
+            }
+
+            public override int getShipCollumn()
+            {
+                return Collumn;
+            }
+
+        }
+        class SpaceWarship : Ship
+        {
+            int Row;
+            int Collumn;
+            string Ship_type;
+
+            public SpaceWarship(int row, int collumn, string ship_type)
+            {
+                this.Row = row;
+                this.Collumn = collumn;
+                this.Ship_type = ship_type;
+            }
+            public override string getShipType()
+            {
+
+                return Ship_type;
+            }
+
+            public override int getShipRow()
+            {
+                return Row;
+            }
+
+            public override int getShipCollumn()
+            {
+                return Collumn;
+            }
+
+        }
+        class SpaceAircarrier : Ship
+        {
+            int Row;
+            int Collumn;
+            string Ship_type;
+
+            public SpaceAircarrier(int row, int collumn, string ship_type)
+            {
+                this.Row = row;
+                this.Collumn = collumn;
+                this.Ship_type = ship_type;
+            }
+            public override string getShipType()
+            {
+
+                return Ship_type;
+            }
+
+            public override int getShipRow()
+            {
+                return Row;
+            }
+
+            public override int getShipCollumn()
+            {
+                return Collumn;
+            }
+
         }
     }
 }

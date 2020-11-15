@@ -100,6 +100,7 @@ namespace Craft_client
             switch (level_name)
             {
                 case "Desert":
+                    Console.WriteLine("Desert");
                     MainGame.BackgroundImage = Properties.Resources.Desert;
                     break;
                 case "Swamp":

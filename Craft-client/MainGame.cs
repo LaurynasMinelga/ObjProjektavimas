@@ -23,6 +23,7 @@ namespace Craft_client
         static long EnemyGameBoardId; // Enemy gameboard id (for shooting straight)
         static long PlayerGameBoardId; // Player gameboard id (to Power up your ships)
         static long GamePanelId; // Game panel ID (it holds our level parameters)
+        static int current_turn;
 
         static int GameState = 0; // Game state = 0 (deployment) / 1 (started, but waiting for enemy deployment) / 2 (waiting for enemy move) / 3 (player turn)
 
@@ -109,7 +110,7 @@ namespace Craft_client
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void Grid_Button_Click_Enemy(object sender, EventArgs e)
+        private async void Grid_Button_Click_Enemy(object sender, EventArgs e)
         {
             //get the row and collumn
             Button clickedButton = (Button)sender;
@@ -119,9 +120,39 @@ namespace Craft_client
             int collumn = location.Y; //collumn
 
             //shoot
+            clickedButton.BackColor = Color.Black;
             panel2.Enabled = false;
             panel1.Enabled = false;
+            label4.Text = "Opponents turn!";
+            Coordinate coordinate_tmp = new Coordinate
+            {
+                Row = row,
+                Collumn = collumn
+            };
+            Requests requests = new Requests();
+            var hit = await client.PostAsJsonAsync(client.BaseAddress.PathAndQuery + "api/Shot/" + EnemyGameBoardId, coordinate_tmp); // Register a new shot
+            Console.WriteLine("\n\nshot content: "+hit.StatusCode);
+            if (hit.StatusCode == HttpStatusCode.OK)
+            {
+                clickedButton.BackColor = Color.Red;
+            }
+
             //get information about the coordinate we shot at
+            button_grid_enemy = await Game.UpdateBoard(client, EnemyGameBoardId, button_grid_enemy);
+
+            //Register turn
+            current_turn++;
+            HttpResponseMessage response = await client.GetAsync(client.BaseAddress.PathAndQuery + "api/Sessions/" + $"{SessionId}");
+            Session session_tmp = await response.Content.ReadAsAsync<Session>();
+            session_tmp.turn = session_tmp.turn + 1;
+            response = await client.PutAsJsonAsync(client.BaseAddress.PathAndQuery + "api/Sessions/" + $"{SessionId}", session_tmp);
+
+            //await another player
+            current_turn = await Game.AwaitYourTurn(client, SessionId, current_turn);
+            // ready
+            panel2.Enabled = true;
+            panel1.Enabled = true;
+            label4.Text = "Your turn!";
         }
 
         /// <summary>
@@ -320,7 +351,6 @@ namespace Craft_client
 
             //send ships to server
             await Game.PrepareShipsOnServer(client, ships, SessionId, PlayerId);
-            Console.WriteLine("\n\nPassed 8");
 
             //check if another player is ready
             GameState = await Game.InitializeGame(client, SessionId, PlayerId);
@@ -334,12 +364,25 @@ namespace Craft_client
             if (GameState == 2) // enemy turn
             {
                 panel1.Enabled = false;
+                panel2.Enabled = false;
+                button1.Visible = false;
                 label4.Text = "Opponents turn!";
+                current_turn = await Game.SyncTurns(client, SessionId);
+
+                //await another player
+                current_turn = await Game.AwaitYourTurn(client, SessionId, current_turn);
+                // ready
+                panel2.Enabled = true;
+                panel1.Enabled = true;
+                label4.Text = "Your turn!";
 
             } else if (GameState == 3) // player turn
             {
                 panel2.Enabled = true;
+                panel1.Enabled = true;
+                button1.Visible = false;
                 label4.Text = "Your turn!";
+                current_turn = await Game.SyncTurns(client, SessionId);
             }
         }
     }

@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace Craft_server.Interfaces
 {
-    interface IObserver
+    public interface IObserver
     {
         void Update(ISubject subject);
     }

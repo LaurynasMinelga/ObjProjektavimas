@@ -7,6 +7,8 @@ using Craft_client.objects;
 using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
+using System.Windows.Forms;
+using System.Drawing;
 
 namespace Craft_client
 {
@@ -57,33 +59,35 @@ namespace Craft_client
         /// <returns></returns>
         public async Task PrepareShipsOnServer(HttpClient client, Ship[] ships, long sessionId, long PlayerId)
         {
+            Requests requests = new Requests();
+
+            GameBoard gameboard = new GameBoard();
+            var url = await requests.CreateAsync(gameboard, client, "api/GameBoards"); // add new gameboard
+            HttpResponseMessage response = await client.GetAsync(url);
+            GameBoard gameboard_new = await response.Content.ReadAsAsync<GameBoard>(); //get gameboardID
+
+            response = await client.GetAsync(client.BaseAddress.PathAndQuery + "api/Players/" + PlayerId); //get player
+            Player player = await response.Content.ReadAsAsync<Player>();
+            Player new_player = new Player
+            {
+                Id = player.Id,
+                Name = player.Name,
+                GameBoardId = gameboard_new.Id,
+            };
+            response = await client.PutAsJsonAsync(client.BaseAddress.PathAndQuery + "api/Players/" + $"{player.Id}", new_player); // append gameboard id
+            Console.WriteLine("Gameboard_new.id = " + gameboard_new.Id);
+
             foreach (Ship ship in ships)
             {
-                Requests requests = new Requests();
                 Ship ship_tmp = new Ship
                 {
                     Size = ship.Size,
                     type = ship.type
                 };
-                var url = await requests.CreateAsync(ship_tmp, client, "api/Ships"); // add new ship
+                url = await requests.CreateAsync(ship_tmp, client, "api/Ships"); // add new ship
 
-                HttpResponseMessage response = await client.GetAsync(url);
-                Ship Ship_local = await response.Content.ReadAsAsync<Ship>(); //get ship that we added (we need shipID)
-
-                GameBoard gameboard = new GameBoard();
-                url = await requests.CreateAsync(gameboard, client, "api/GameBoards"); // add new gameboard
                 response = await client.GetAsync(url);
-                GameBoard gameboard_new = await response.Content.ReadAsAsync<GameBoard>(); //get gameboardID
-
-                response = await client.GetAsync(client.BaseAddress.PathAndQuery + "api/Players/"+PlayerId); //get player
-                Player player = await response.Content.ReadAsAsync<Player>();
-                Player new_player = new Player
-                {
-                    Id = player.Id,
-                    Name = player.Name,
-                    GameBoardId = gameboard_new.Id,
-                };
-                response = await client.PutAsJsonAsync(client.BaseAddress.PathAndQuery + "api/Player/" + $"{player.Id}", new_player); // append gameboard id
+                Ship Ship_local = await response.Content.ReadAsAsync<Ship>(); //get ship that we added (we need shipID)
 
                 for (int i = 0; i < ship.Size; i++)
                 {
@@ -189,6 +193,52 @@ namespace Craft_client
             GamePanel gamepanel_new = await response.Content.ReadAsAsync<GamePanel>(); 
 
             return gamepanel_new.Id;
+        }
+
+        public async Task<Button[,]> UpdateBoard(HttpClient client, long gamepanelId, Button[,] button_grid_player)
+        {
+            HttpResponseMessage response = await client.GetAsync(client.BaseAddress.PathAndQuery + "api/Shot/" + gamepanelId); // get gameboard
+            var coordinates = await response.Content.ReadAsAsync<List<Coordinate>>();
+
+
+            for (int i = 0; i < 10; i++)
+            {
+                for (int j = 0; j < 10; j++)
+                {
+                    for (int k = 0; k < coordinates.Count(); k++)
+                    {
+                        Point location = (Point)button_grid_player[i, j].Tag;
+                        if (location.X == coordinates.ToArray()[k].Row && location.Y == coordinates.ToArray()[k].Collumn && 
+                            (coordinates.ToArray()[k].Occupation == Occupation.Destroyed || coordinates.ToArray()[k].Occupation == Occupation.Missed))
+                        {
+                            button_grid_player[i, j].Enabled = false;
+                            Console.WriteLine("LOCATION >>> "+location.X+location.Y);
+                        }
+                    }
+                }
+            }
+
+            return button_grid_player;
+        }
+
+        public async Task<int> AwaitYourTurn(HttpClient client, long sessionID, int current_turn)
+        {
+            int next_turn = current_turn+1;
+            while (current_turn != next_turn)
+            {
+                await Task.Delay(1000);
+                current_turn = await SyncTurns(client, sessionID);
+            }
+
+            return current_turn;
+        }
+
+        public async Task<int> SyncTurns(HttpClient client, long sessionID)
+        {
+            HttpResponseMessage response = await client.GetAsync(client.BaseAddress.PathAndQuery + "api/Sessions/" + sessionID); //get session turn
+            Session session = await response.Content.ReadAsAsync<Session>();
+
+            return session.turn;
         }
 
 

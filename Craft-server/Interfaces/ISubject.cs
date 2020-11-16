@@ -6,7 +6,7 @@ using Craft_server.Models;
 
 namespace Craft_server.Interfaces
 {
-    interface ISubject
+    public interface ISubject
     {
         void Attach(IObserver observer);
         void Notify();

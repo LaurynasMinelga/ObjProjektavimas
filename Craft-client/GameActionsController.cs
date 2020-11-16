@@ -169,21 +169,21 @@ namespace Craft_client
                     gamepanel = new GamePanel
                     {
                         SessionId = sessionID,
-                        Level = GamePanel.Levels.Desert
+                        Level = GamePanel.Levels.Swamp
                     };
                     break;
                 case "Sea":
                     gamepanel = new GamePanel
                     {
                         SessionId = sessionID,
-                        Level = GamePanel.Levels.Desert
+                        Level = GamePanel.Levels.Sea
                     };
                     break;
                 case "Space":
                     gamepanel = new GamePanel
                     {
                         SessionId = sessionID,
-                        Level = GamePanel.Levels.Desert
+                        Level = GamePanel.Levels.Space
                     };
                     break;
             }

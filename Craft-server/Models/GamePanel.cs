@@ -18,6 +18,9 @@ namespace Craft_server.Models
         public List<GameBoard> GameBoards { get; set; }
         public Session Session { get; set; }
         public long SessionId { get; set; }
-        public Levels Levels { get; set; }
+        public Levels Level { get; set; }
+        public string Gun1 { get; set; }
+        public string Gun2 { get; set; }
+
     }
 }

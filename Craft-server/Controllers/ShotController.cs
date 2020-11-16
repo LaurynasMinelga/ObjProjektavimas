@@ -62,13 +62,13 @@ namespace Craft_server.Controllers
                 //assign all coordinates around the ship as observers
                 Coordinate c = new Coordinate();
                 Battlefield battlefield = new Battlefield(_context);
+                /*
                 for (int i=0;i < ship_size; i++)
                 {
                     c = ship_size_sequence.ToArray()[i];
-                    Console.WriteLine("\n\nSHIP detected: " +c.Row+" "+c.Collumn);
                     //battlefield.Attach(c);
                     battlefield = DisableNearbyCoordinates(battlefield, c.Row, c.Collumn, gameboardId);
-                }
+                }*/
 
                 //check if the ship is destroyed
                 bool all_destroyed = true;
@@ -82,6 +82,14 @@ namespace Craft_server.Controllers
                 }
                 if (all_destroyed) // if whole ship destroyed - notify
                 {
+                    //assign all coordinates around the ship as observers
+                    for (int i = 0; i < ship_size; i++)
+                    {
+                        c = ship_size_sequence.ToArray()[i];
+                        //battlefield.Attach(c);
+                        battlefield = DisableNearbyCoordinates(battlefield, c.Row, c.Collumn, gameboardId);
+                    }
+                    //notify
                     battlefield.Notify();
                 }
                 return Ok();

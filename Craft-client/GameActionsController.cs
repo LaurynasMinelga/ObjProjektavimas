@@ -269,7 +269,5 @@ namespace Craft_client
 
             return session.turn;
         }
-
-
     }
 }

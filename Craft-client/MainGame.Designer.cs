@@ -44,7 +44,19 @@
             this.label3 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
             this.button1 = new System.Windows.Forms.Button();
+            this.panel4 = new System.Windows.Forms.Panel();
+            this.checkedListBox2 = new System.Windows.Forms.CheckedListBox();
+            this.label11 = new System.Windows.Forms.Label();
+            this.button2 = new System.Windows.Forms.Button();
+            this.checkedListBox1 = new System.Windows.Forms.CheckedListBox();
+            this.label10 = new System.Windows.Forms.Label();
+            this.label9 = new System.Windows.Forms.Label();
+            this.checkedListBox3 = new System.Windows.Forms.CheckedListBox();
+            this.panel5 = new System.Windows.Forms.Panel();
+            this.label12 = new System.Windows.Forms.Label();
             this.panel3.SuspendLayout();
+            this.panel4.SuspendLayout();
+            this.panel5.SuspendLayout();
             this.SuspendLayout();
             // 
             // panel1
@@ -76,7 +88,7 @@
             this.panel3.Controls.Add(this.radioButton1);
             this.panel3.Location = new System.Drawing.Point(13, 138);
             this.panel3.Name = "panel3";
-            this.panel3.Size = new System.Drawing.Size(129, 300);
+            this.panel3.Size = new System.Drawing.Size(129, 132);
             this.panel3.TabIndex = 2;
             // 
             // label8
@@ -204,11 +216,118 @@
             this.button1.UseVisualStyleBackColor = true;
             this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
+            // panel4
+            // 
+            this.panel4.Controls.Add(this.checkedListBox2);
+            this.panel4.Controls.Add(this.label11);
+            this.panel4.Controls.Add(this.button2);
+            this.panel4.Controls.Add(this.checkedListBox1);
+            this.panel4.Controls.Add(this.label10);
+            this.panel4.Location = new System.Drawing.Point(13, 52);
+            this.panel4.Name = "panel4";
+            this.panel4.Size = new System.Drawing.Size(435, 67);
+            this.panel4.TabIndex = 9;
+            // 
+            // checkedListBox2
+            // 
+            this.checkedListBox2.FormattingEnabled = true;
+            this.checkedListBox2.Items.AddRange(new object[] {
+            "Torpedo",
+            "Missile",
+            "Artilery",
+            "Nuclear"});
+            this.checkedListBox2.Location = new System.Drawing.Point(71, 3);
+            this.checkedListBox2.Name = "checkedListBox2";
+            this.checkedListBox2.Size = new System.Drawing.Size(107, 64);
+            this.checkedListBox2.TabIndex = 5;
+            // 
+            // label11
+            // 
+            this.label11.AutoSize = true;
+            this.label11.Location = new System.Drawing.Point(4, 23);
+            this.label11.Name = "label11";
+            this.label11.Size = new System.Drawing.Size(61, 13);
+            this.label11.TabIndex = 4;
+            this.label11.Text = "Front gun >";
+            // 
+            // button2
+            // 
+            this.button2.Location = new System.Drawing.Point(360, 0);
+            this.button2.Name = "button2";
+            this.button2.Size = new System.Drawing.Size(75, 67);
+            this.button2.TabIndex = 3;
+            this.button2.Text = "Add Weapons";
+            this.button2.UseVisualStyleBackColor = true;
+            this.button2.Click += new System.EventHandler(this.button2_Click);
+            // 
+            // checkedListBox1
+            // 
+            this.checkedListBox1.FormattingEnabled = true;
+            this.checkedListBox1.Items.AddRange(new object[] {
+            "Laser",
+            "EMP",
+            "Shield",
+            "Beam",
+            "Reactor"});
+            this.checkedListBox1.Location = new System.Drawing.Point(253, 0);
+            this.checkedListBox1.Name = "checkedListBox1";
+            this.checkedListBox1.Size = new System.Drawing.Size(103, 64);
+            this.checkedListBox1.TabIndex = 2;
+            // 
+            // label10
+            // 
+            this.label10.AutoSize = true;
+            this.label10.Location = new System.Drawing.Point(184, 23);
+            this.label10.Name = "label10";
+            this.label10.Size = new System.Drawing.Size(63, 13);
+            this.label10.TabIndex = 1;
+            this.label10.Text = "Rear gun  >";
+            this.label10.Click += new System.EventHandler(this.label10_Click);
+            // 
+            // label9
+            // 
+            this.label9.AutoSize = true;
+            this.label9.Location = new System.Drawing.Point(17, 33);
+            this.label9.Name = "label9";
+            this.label9.Size = new System.Drawing.Size(101, 13);
+            this.label9.TabIndex = 10;
+            this.label9.Text = "Choose technology:";
+            // 
+            // checkedListBox3
+            // 
+            this.checkedListBox3.FormattingEnabled = true;
+            this.checkedListBox3.Location = new System.Drawing.Point(3, 34);
+            this.checkedListBox3.Name = "checkedListBox3";
+            this.checkedListBox3.Size = new System.Drawing.Size(120, 124);
+            this.checkedListBox3.TabIndex = 11;
+            // 
+            // panel5
+            // 
+            this.panel5.Controls.Add(this.label12);
+            this.panel5.Controls.Add(this.checkedListBox3);
+            this.panel5.Location = new System.Drawing.Point(13, 277);
+            this.panel5.Name = "panel5";
+            this.panel5.Size = new System.Drawing.Size(129, 161);
+            this.panel5.TabIndex = 12;
+            this.panel5.Visible = false;
+            // 
+            // label12
+            // 
+            this.label12.AutoSize = true;
+            this.label12.Location = new System.Drawing.Point(7, 15);
+            this.label12.Name = "label12";
+            this.label12.Size = new System.Drawing.Size(116, 13);
+            this.label12.TabIndex = 12;
+            this.label12.Text = "Technologies available";
+            // 
             // MainGame
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.panel5);
+            this.Controls.Add(this.label9);
+            this.Controls.Add(this.panel4);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.label3);
@@ -221,6 +340,10 @@
             this.Load += new System.EventHandler(this.MainGame_Load);
             this.panel3.ResumeLayout(false);
             this.panel3.PerformLayout();
+            this.panel4.ResumeLayout(false);
+            this.panel4.PerformLayout();
+            this.panel5.ResumeLayout(false);
+            this.panel5.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -244,5 +367,15 @@
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Panel panel4;
+        private System.Windows.Forms.Label label10;
+        private System.Windows.Forms.Label label9;
+        private System.Windows.Forms.CheckedListBox checkedListBox1;
+        private System.Windows.Forms.Button button2;
+        private System.Windows.Forms.CheckedListBox checkedListBox2;
+        private System.Windows.Forms.Label label11;
+        private System.Windows.Forms.CheckedListBox checkedListBox3;
+        private System.Windows.Forms.Panel panel5;
+        private System.Windows.Forms.Label label12;
     }
 }

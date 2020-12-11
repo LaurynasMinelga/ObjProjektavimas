@@ -11,6 +11,7 @@ using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using Craft_client.objects;
+using Craft_client.Composite;
 
 namespace Craft_client
 {
@@ -384,6 +385,46 @@ namespace Craft_client
                 label4.Text = "Your turn!";
                 current_turn = await Game.SyncTurns(client, SessionId);
             }
+        }
+
+        private void label10_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        /// <summary>
+        /// Choose weapons technology and add to server
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void button2_Click(object sender, EventArgs e)
+        {
+            int max_guns_number = 4;
+            int guns_number = 0;
+
+            CompositeAttack Attack_1 = new CompositeAttack("Ships_front");
+            foreach (object itemChecked in checkedListBox1.CheckedItems)
+            {
+                if (guns_number < max_guns_number)
+                {
+                    Attack_1.Add(new Gun(itemChecked.ToString()));
+                    checkedListBox3.Items.Insert(guns_number, itemChecked.ToString());
+                }
+                guns_number++;
+            }
+
+            CompositeAttack Attack_2 = new CompositeAttack("Ships_rear");
+            foreach (object itemChecked in checkedListBox2.CheckedItems)
+            {
+                if (guns_number < max_guns_number)
+                {
+                    Attack_2.Add(new Gun(itemChecked.ToString()));
+                    checkedListBox3.Items.Insert(guns_number, itemChecked.ToString());
+                }
+                guns_number++;
+            }
+            panel5.Visible = true;
+            Attack_1.Display(1);
         }
     }
 }

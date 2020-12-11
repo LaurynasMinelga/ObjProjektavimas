@@ -56,6 +56,9 @@
     <Compile Include="Chain\Handler.cs" />
     <Compile Include="Chain\Initializer.cs" />
     <Compile Include="Chain\Matchmaker.cs" />
+    <Compile Include="Composite\CompositeAttack.cs" />
+    <Compile Include="Composite\Gun.cs" />
+    <Compile Include="Composite\Technology.cs" />
     <Compile Include="GameActionsController.cs" />
     <Compile Include="IteratorPattern\Collection.cs" />
     <Compile Include="IteratorPattern\IAbstractCollection.cs" />

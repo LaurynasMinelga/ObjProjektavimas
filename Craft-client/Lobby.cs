@@ -11,13 +11,14 @@ using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using Craft_client.objects;
+using Craft_client.Chain;
 
 namespace Craft_client
 {
     public partial class Lobby : Form
     {
         static HttpClient client;
-        private bool CancelButton_Clicked = false;
+        public bool CancelButton_Clicked = false;
         public Lobby(HttpClient _client)
         {
             InitializeComponent();
@@ -46,6 +47,14 @@ namespace Craft_client
             Console.WriteLine($"Created at {url}");
 
             // If created successfully - proceed with session creation.
+            Handler matchmaker = new Matchmaker();
+            Handler delayer = new Delayer();
+            Handler initilizer = new Initializer();
+            matchmaker.SetSuccessor(delayer);
+            delayer.SetSuccessor(initilizer);
+
+            await matchmaker.InitiateMatchmaking(level_name,this,url,client);
+            /*
             if (url != null)
             {
                 ICollection<Session> sessions = null;
@@ -55,6 +64,7 @@ namespace Craft_client
                 if (sessions.Count != 0) //if there are sessions active
                 {
                     bool open_session_exists = true;
+                    //matchmaker.InitiateMatchmaking(url);
                     foreach (Session session in sessions)
                     {
                         if (session.PlayerTwoId == 0) // if an open session exists (someone awaits other players)
@@ -91,7 +101,7 @@ namespace Craft_client
             else // indicate user creation failure
             {
                 textBox1.BackColor = Color.Red;
-            }
+            }*/
         }
         // Initiate MainGame window and set level color
         private void Initiate_Game(long sessionID, string level_name, long PlayerID)

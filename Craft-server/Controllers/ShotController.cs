@@ -86,7 +86,6 @@ namespace Craft_server.Controllers
                     for (int i = 0; i < ship_size; i++)
                     {
                         c = ship_size_sequence.ToArray()[i];
-                        //battlefield.Attach(c);
                         battlefield = DisableNearbyCoordinates(battlefield, c.Row, c.Collumn, gameboardId);
                     }
                     //notify

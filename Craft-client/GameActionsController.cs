@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Craft_client.objects;
+using Craft_client.IteratorPattern;
 using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
@@ -199,8 +200,36 @@ namespace Craft_client
         {
             HttpResponseMessage response = await client.GetAsync(client.BaseAddress.PathAndQuery + "api/Shot/" + gamepanelId); // get gameboard
             var coordinates = await response.Content.ReadAsAsync<List<Coordinate>>();
+            Collection coords = new Collection();
 
+            for (int g = 0; g < coordinates.Count(); g++)
+            {
+                coords[g] = new Coordinate {
+                    Row = coordinates.ToArray()[g].Row,
+                    Collumn = coordinates.ToArray()[g].Collumn,
+                    Occupation = coordinates.ToArray()[g].Occupation
+                };
+            }
+            Iterator iterator = coords.CreateIterator();
 
+            for (Coordinate c = iterator.First(); !iterator.IsDone; c = iterator.Next())
+            {
+                for (int i = 0; i < 10; i++)
+                {
+                    for (int j = 0; j < 10; j++)
+                    {
+                        Point location = (Point)button_grid_player[i, j].Tag;
+                        if (location.X == c.Row && location.Y == c.Collumn &&
+                            (c.Occupation == Occupation.Destroyed || c.Occupation == Occupation.Missed))
+                        {
+                            button_grid_player[i, j].Enabled = false;
+                            Console.WriteLine("LOCATION >>> " + location.X + location.Y);
+                        }
+
+                    }
+                }
+            }
+            /*
             for (int i = 0; i < 10; i++)
             {
                 for (int j = 0; j < 10; j++)
@@ -216,7 +245,7 @@ namespace Craft_client
                         }
                     }
                 }
-            }
+            }*/
 
             return button_grid_player;
         }

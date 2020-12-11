@@ -52,7 +52,15 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Chain\Delayer.cs" />
+    <Compile Include="Chain\Handler.cs" />
+    <Compile Include="Chain\Initializer.cs" />
+    <Compile Include="Chain\Matchmaker.cs" />
     <Compile Include="GameActionsController.cs" />
+    <Compile Include="IteratorPattern\Collection.cs" />
+    <Compile Include="IteratorPattern\IAbstractCollection.cs" />
+    <Compile Include="IteratorPattern\IAbstractIterator.cs" />
+    <Compile Include="IteratorPattern\Iterator.cs" />
     <Compile Include="Lobby.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -65,6 +73,7 @@
     <Compile Include="MainGame.Designer.cs">
       <DependentUpon>MainGame.cs</DependentUpon>
     </Compile>
+    <Compile Include="MatchmakingController.cs" />
     <Compile Include="objects\Coordinate.cs" />
     <Compile Include="objects\GameBoard.cs" />
     <Compile Include="objects\GamePanel.cs" />
@@ -124,5 +133,6 @@
   <ItemGroup>
     <None Include="assets\swamp.jpg" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
